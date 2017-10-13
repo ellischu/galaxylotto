@@ -1,0 +1,154 @@
+﻿body {
+    background-color: white;
+}
+
+table {
+    border-radius: 5px 5px 5px 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    caption-side: top;
+}
+
+caption {
+    color: darkred;
+    text-align: left;
+    font-weight: bolder;
+    font-size: large;
+}
+
+th, td {
+    color: black;
+    border: 1px solid black;
+    empty-cells: show;
+}
+
+.date {
+    background-color: rgb(244, 248, 129);
+}
+
+.lngL1 {
+    background-color: #ffff99;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL2 {
+    background-color: #cc99ff;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL3 {
+    background-color: #66ffff;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL4 {
+    background-color: #ffccff;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL5 {
+    background-color: #66ff33;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL6 {
+    background-color: lightgreen;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngL7 {
+    background-color: lightgrey;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngS1 {
+    background-color: lightpink;
+    color: #cc3300;
+    font-weight: bold;
+}
+
+.lngTotalSN, .lngYearSN, .lngDateSN, .strSN {
+    background-color: rgb(255, 236, 202);
+}
+
+
+.intSum {
+    background-color: rgb(172, 248, 214);
+}
+
+.strYearT1, .strYearT2, .strMonthT1, .strMonthT2,
+.strDayT1, .strDayT2, .strHourT, .strDayFive, .strDayTwelve,
+.strDayNine, .strDayTwentyEight, .strHourTwentyEight, .strDayEight {
+    background-color: rgb(243, 202, 251);
+}
+
+.strp01, .strp02, .strp03, .strp04, .strp05,
+.strp06, .strp07, .strp08, .strp09, .strp10,
+.strp11, .strp12, .strp13 {
+    background-color: rgb(231, 254, 183);
+}
+
+details.CurrentData {
+    background-color: rgba(194, 255, 161, 0.81);
+    border-radius: 5px 5px 5px 5px;
+}
+
+details.PercentAll {
+    background-color: rgba(237, 255, 161, 0.73);
+    max-width: 1400px;
+    overflow: auto;
+}
+
+details.PercentOK {
+    background-color: rgba(255, 232, 255, 0.85);
+    max-width: 1400px;
+    overflow: auto;
+}
+
+details.PercentNon {
+    background-color: rgba(155, 155, 155, 0.87);
+    max-width: 1400px;
+    overflow: auto;
+}
+
+td.hot {
+    vertical-align: top;
+    border: 0;
+}
+
+tr.LightSeaGreen {
+    background-color: lightseagreen;
+}
+
+tr.LightPink {
+    background-color: LightPink;
+}
+
+tr.LightGreen {
+    background-color: LightGreen;
+}
+
+table.hot00 {
+    border: 0;
+    border-collapse: collapse;
+}
+
+summary.Title {
+    color: mediumblue;
+    font-weight: bolder;
+    text-decoration-line: underline;
+    text-shadow: 2px 2px 1px rgb(81, 191, 255);
+}
+
+div.con01 {
+    border: 1px solid red;
+}
+
+

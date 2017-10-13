@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<optionsearch >
+  <!-- 彩別 -->
+  <item >
+    <name>cmbLottoType</name>
+    <rowsdata>
+      <id>LottoBig</id>
+      <description>大樂透</description>
+      <id>Lotto539</id>
+      <description>今彩539</description>
+      <id>LottoWeli</id>
+      <description>威力彩</description>
+      <id>LottoSix</id>
+      <description>六合彩</description>
+      <id>LottoDafu</id>
+      <description>大福彩</description>
+    </rowsdata>
+  </item>
+  <!-- 比較方式 -->
+  <item>
+    <name >cmbCompareType</name>
+    <rowsdata>
+      <id>AND</id>
+      <description>AND</description>
+      <id>OR</id>
+      <description>OR</description>
+    </rowsdata>
+
+  </item>
+  <!-- 比較欄位 -->
+  <item >
+    <name >cmbCompare</name>
+    <rowsdata >
+      <id>none</id>
+      <description>選擇</description>
+      <id>strYearT1</id>
+      <description>年干</description>
+      <id>strYearT2</id>
+      <description>年支</description>
+      <id>strMonthT1</id>
+      <description>月干</description>
+      <id>strMonthT2</id>
+      <description>月支</description>
+      <id>strDayT1</id>
+      <description>日干</description>
+      <id>strDayT2</id>
+      <description>日支</description>
+      <id>strDayFive</id>
+      <description>日五形</description>
+      <id>strDayTwelve</id>
+      <description>日執</description>
+      <id>strDayNine</id>
+      <description>日9星</description>
+      <id>strDayTwentyEight</id>
+      <description>日宿</description>
+      <id>strHourT</id>
+      <description>時柱</description>
+      <id>strHourTwentyEight</id>
+      <description>時宿</description>
+      <id>strDayEight</id>
+      <description>日掛</description>
+      <id>strp01</id>
+      <description>本命</description>
+      <id>strp02</id>
+      <description>父母</description>
+      <id>strp03</id>
+      <description>福德</description>
+      <id>strp04</id>
+      <description>田宅</description>
+      <id>strp05</id>
+      <description>官祿</description>
+      <id>strp06</id>
+      <description>奴僕</description>
+      <id>strp07</id>
+      <description>遷移</description>
+      <id>strp08</id>
+      <description>疾厄</description>
+      <id>strp09</id>
+      <description>財帛</description>
+      <id>strp10</id>
+      <description>子女</description>
+      <id>strp11</id>
+      <description>夫妻</description>
+      <id>strp12</id>
+      <description>兄弟</description>
+      <id>strp13</id>
+      <description>命重</description>
+    </rowsdata>
+  </item>
+  <item >
+    <name>cmbNextNums</name>
+    <rowsdata >
+      <id>0</id>
+      <description>0</description>
+      <id>1</id>
+      <description>1</description>
+      <id>2</id>
+      <description>2</description>
+      <id>3</id>
+      <description>3</description>
+      <id>4</id>
+      <description>4</description>
+    </rowsdata>
+  </item>
+  <item >
+    <name>cmbNextStep</name>
+    <rowsdata >
+      <id>1</id>
+      <description>1</description>
+      <id>2</id>
+      <description>2</description>
+      <id>3</id>
+      <description>3</description>
+      <id>4</id>
+      <description>4</description>
+      <id>5</id>
+      <description>5</description>
+    </rowsdata>
+  </item>
+</optionsearch>

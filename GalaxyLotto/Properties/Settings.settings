@@ -1,0 +1,70 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GalaxyLotto.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DBOptionsCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBOptions;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBOptions;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DBMethodCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBMethod;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBMethod;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DB539DataCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DB539Data;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DB539Data;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DBBigDataCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoBig;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoBig;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DBDafuDataCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoDafu;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoDafu;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DBWeliDataCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoWeli;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoWeli;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DBSixDataCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoSix;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DBLottoSix;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+    <Setting Name="DB539FreqCS" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DB539Freq;Persist Security Info=True;User ID=ellischu;Password=Eunice168&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;System.Data.SqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">Data Source=HOME001\SQLEXPRESS;Initial Catalog=GL_DB539Freq;Persist Security Info=True;User ID=ellischu;Password=Eunice168</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

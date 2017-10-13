@@ -1,0 +1,65 @@
+﻿<Window x:Name="ProcedureMonitor" x:Class="GalaxyLotto.Monitor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GalaxyLotto"
+        mc:Ignorable="d"
+        Title="Monitor" Height="369.686" Width="236.812" WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResizeWithGrip" Topmost="True" ShowInTaskbar="False" 
+        Closed="ProcedureMonitor_Closed" WindowStyle="None" MouseDown="ProcedureMonitor_MouseDown" Loaded="ProcedureMonitor_Loaded">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <LinearGradientBrush.RelativeTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterY="0.5" CenterX="0.5"/>
+                    <SkewTransform CenterY="0.5" CenterX="0.5"/>
+                    <RotateTransform Angle="90" CenterY="0.5" CenterX="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </LinearGradientBrush.RelativeTransform>
+            <GradientStop Color="#FFF7A2A2"/>
+            <GradientStop Color="#FFFEF8F8" Offset="0.096"/>
+            <GradientStop Color="#FFFF7474" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <!--<Grid x:Name="gridMain">-->
+    <StackPanel x:Name="spMain" Orientation="Vertical" VerticalAlignment="Top"  >
+        <Grid x:Name="Setting" Height="25">
+            <CheckBox Content="Always on Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" IsChecked="True" Margin="0,4,0,3" VerticalAlignment="Top" HorizontalAlignment="Left" />
+            <Image VerticalAlignment="Center" HorizontalAlignment="Right" Source="pack://siteoforigin:,,,/Resources/btnclose00.png" MouseEnter="Image_MouseEnter" MouseLeave="Image_MouseLeave" MouseDown="Image_MouseDown" Width="15" Height="15" />
+        </Grid>
+        <Grid x:Name="gSearchAll" Height="25" Background="#FFFEFFB1" >
+            <ProgressBar x:Name="pbSearchAll" Orientation="Horizontal" Background="{x:Null}"/>
+            <TextBlock x:Name="tbSearchAll" Text="SearchAll" VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="1" Foreground="Black" />
+        </Grid>
+        <Grid x:Name="gGetSearchFreq" Height="25" Background="#FFA9FDC5" >
+            <ProgressBar x:Name="pbGetSearchFreq" Orientation="Horizontal" Background="{x:Null}"/>
+            <TextBlock x:Name="tbGetSearchFreq" Text="GetSearchFreq" VerticalAlignment="Center" HorizontalAlignment="Center" Panel.ZIndex="1" />
+        </Grid>
+        <Grid x:Name="gSearchFreq" Height="25" Background="#FFA9FDC5" >
+            <ProgressBar x:Name="pbSearchFreq" Orientation="Horizontal" Background="{x:Null}"/>
+            <TextBlock x:Name="tbSearchFreq" Text="SearchFreq" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="gUpdateSearchFreq" Height="25" Background="#FFA9FDC5" >
+            <ProgressBar x:Name="pbUpdateSearchFreq" Orientation="Horizontal" Background="{x:Null}"/>
+            <TextBlock x:Name="tbUpdateSearchFreq" Text="UpdateSearchFreq" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="gSearchHit" Height="25" Background="#FF57C3FB" >
+            <ProgressBar x:Name="pbSearchHit" Orientation="Horizontal" Background="{x:Null}"/>
+            <TextBlock x:Name="tbSearchHit" Text="SearchHit" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="gUpdateSearchHit" Height="25" Background="#FF57C3FB" >
+            <Image  x:Name="pbUpdateSearchHit" Source="pack://siteoforigin:,,,/Resources/dot-red-200.png" HorizontalAlignment="Left" VerticalAlignment="Center" Width="15" Height="15"/>
+            <TextBlock x:Name="tbUpdateSearchHit" Text="UpdateSearchHit" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="gUpdateData" Height="25" >
+            <ProgressBar x:Name="pbUpdateData" Orientation="Horizontal"/>
+            <TextBlock x:Name="tbUpdateData" Text="UpdateData" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid x:Name="gShowFreq" Height="25" >
+            <ProgressBar x:Name="pbShowFreq" Orientation="Horizontal"/>
+            <TextBlock x:Name="tbShowFreq" Text="ShowResult" VerticalAlignment="Center" Panel.ZIndex="1" HorizontalAlignment="Center" />
+        </Grid>
+    </StackPanel>
+</Window>

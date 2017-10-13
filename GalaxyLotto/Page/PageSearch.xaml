@@ -1,0 +1,138 @@
+﻿<Page x:Class="GalaxyLotto.PageSearch"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GalaxyLotto"
+      mc:Ignorable="d" 
+      d:DesignHeight="585" d:DesignWidth="790" Loaded="Page_Loaded"
+      Title="PageSearch" Background="Black">
+    <Grid x:Name="MainGrid00" ScrollViewer.HorizontalScrollBarVisibility="Auto" Margin="0">
+        <StackPanel Margin="0,0,0,16" HorizontalAlignment="Left" Width="790" Grid.RowSpan="2" >
+            <Expander Header="基本設置" IsExpanded="True" Background="{x:Null}" Foreground="#FF6AFD43" BorderBrush="#FF6AFD43" BorderThickness="0,0,0,1" >
+                <WrapPanel >
+                    <Label Content="樂透種類" Foreground="#FF6AFD43" Margin="5,5,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                    <ComboBox x:Name="cmbLottoType" SelectionChanged="CmbLottoType_SelectionChanged" Width="100" Background="White" BorderBrush="#FF43F232" Foreground="Black" Margin="5,5,0,5" Cursor="Hand"/>
+                    <Label Content="搜尋方式" Foreground="#FF6AFD43" Margin="5,5,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <ComboBox x:Name="cmbCompareType" SelectionChanged="CmbCompareType_SelectionChanged" Width="100" Background="White" BorderBrush="#FF43F232" Foreground="Black" Margin="5,5,0,5" Cursor="Hand" />
+                    <CheckBox x:Name="chkGeneral" Content="一般" IsChecked="True" Unchecked="ChkGeneral_Unchecked" Checked="ChkGeneral_Checked" Foreground="#FF6AFD43" Background="#FFFFFA00" Margin="100,5,0,5" VerticalContentAlignment="Center" Cursor="Hand" BorderBrush="#FF43F232"  />
+                    <CheckBox x:Name="chkField" Content="欄位" Checked="ChkField_Checked" Unchecked="ChkField_Unchecked" Foreground="#FF6AFD43" Background="#FFFFFA00" Margin="5,5,0,5" VerticalContentAlignment="Center" Cursor="Hand" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkNextNums" Content="托牌" Checked="ChkNextNums_Checked" Unchecked="ChkNextNums_Unchecked" Foreground="#FF6AFD43" Background="#FFFFFA00" Margin="5,5,0,5" VerticalContentAlignment="Center" Cursor="Hand" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkPeriod" Content="週期" Checked="ChkPeriod_Checked" Unchecked="ChkPeriod_Unchecked" Foreground="#FF6AFD43" Background="#FFFFFA00" Margin="5,5,0,5" VerticalContentAlignment="Center" Cursor="Hand" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkRecalc" Content="重算" Checked="ChkRecalc_Checked" Unchecked="ChkRecalc_Unchecked" Foreground="#FF6AFD43" Background="#FFFFFA00" Margin="5,5,0,5" VerticalContentAlignment="Center" Cursor="Hand" BorderBrush="#FF43F232" />
+                </WrapPanel>
+            </Expander>
+            <Expander Header="資料範圍" IsExpanded="True" Background="{x:Null}" Foreground="#FF6AFD43" BorderThickness="0,0,0,1" BorderBrush="#FF6AFD43" >
+                <WrapPanel >
+                    <Label Content="日期" Foreground="#FF6AF22B" Margin="5,5,0,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <ComboBox x:Name="cmbDataRangeEnd" SelectionChanged="CmbDataRangeEnd_SelectionChanged" Width="100" Margin="5,5,0,5" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                    <Label Content ="資料期數" Margin="5,5,0,5" Foreground="#FF6AFD43" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="txtDataLimit" Text="0" Background="{x:Null}" Margin="5,5,0,5" VerticalContentAlignment="Center" Width="40" LostFocus="TxtDataLimit_LostFocus" TextChanged="TxtDataLimit_TextChanged" KeyDown="TxtDataLimit_KeyDown" BorderBrush="#FF43F232" Foreground="#FF43F232" />
+                    <Label Content ="資料位移" Margin="5,5,0,5" Foreground="#FF6AFD43" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="txtDataOffset" Text="0" TextChanged="TxtDataOffset_TextChanged" KeyDown="TxtDataOffset_KeyDown" Background="{x:Null}" Margin="5,5,0,5" VerticalContentAlignment="Center" Width="40" BorderBrush="#FF43F232" Foreground="#FF43F232" />
+                    <Label Content ="查詢期數" Margin="5,5,0,5" Foreground="#FF6AFD43" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="txtSearchLimit" Text="0" TextChanged="TxtSearchLimit_TextChanged" KeyDown="TxtSearchLimit_KeyDown" Background="{x:Null}" Margin="5,5,0,5" VerticalContentAlignment="Center" Width="40" BorderBrush="#FF43F232" Foreground="#FF43F232" />
+                    <Label Content ="查詢位移" Margin="5,5,0,5" Foreground="#FF6AFD43" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="txtSearchOffset" Text="0" TextChanged="TxtSearchOffset_TextChanged" KeyDown="TxtSearchOffset_KeyDown" Background="{x:Null}" Margin="5,5,0,5" VerticalContentAlignment="Center" Width="40" BorderBrush="#FF43F232" Foreground="#FF43F232" />
+                    <Label Content ="測試次數" Margin="5,5,0,5" Foreground="#FF6AFD43" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <TextBox x:Name="txtTestTimes" Text="1" TextChanged ="TxtTestTimes_TextChanged" KeyDown="TxtTestTimes_KeyDown" Background="{x:Null}" Margin="5,5,0,5" VerticalContentAlignment="Center" Width="40" BorderBrush="#FF43F232" Foreground="#FF43F232" />
+                </WrapPanel>
+            </Expander>
+            <Expander x:Name="rgCompare" Header="比較欄位" IsEnabled="False" Background="{x:Null}" Foreground="#FF6AFD43" BorderBrush="#FF6AFD43" BorderThickness="0,0,0,1"  >
+                <WrapPanel>
+                    <Label Content="欄位1" Foreground="#FF6AFD43" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbCompare01" Margin="5,5,0,5" Width="90" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                    <Label Content="欄位2" Foreground="#FF6AFD43" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbCompare02" Margin="5,5,0,5" Width="90" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                    <Label Content="欄位3" Foreground="#FF6AFD43" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbCompare03" Margin="5,5,0,5" Width="90" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                    <Label Content="欄位4" Foreground="#FF6AFD43" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbCompare04" Margin="5,5,0,5" Width="90" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                    <Label Content="欄位5" Foreground="#FF6AFD43" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbCompare05" Margin="5,5,0,5" Width="90" Cursor="Hand" Background="White" BorderBrush="#FF43F232" Foreground="Black"/>
+                </WrapPanel>
+            </Expander>
+            <Expander x:Name="rgNextNums" Header="拖牌設定" IsExpanded="False" IsEnabled="False" Background="{x:Null}" Foreground="#FF6AFD43" BorderBrush="#FF6AFD43" BorderThickness="0,0,0,1" >
+                <WrapPanel>
+                    <Label Content="星數" Foreground="#FF6AFD43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbNextNums" SelectionChanged="CmbNextNums_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,0,5" Width="95" Cursor="Hand" Background="White" BorderBrush="#FF43F232" />
+                    <Label Content="間隔" Foreground="#FF6AFD43" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,0,5"/>
+                    <ComboBox x:Name="cmbNextStep" SelectionChanged="CmbNextStep_SelectionChanged" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5,5,0,5" Width="95" Cursor="Hand" Background="White" BorderBrush="#FF43F232"/>
+                </WrapPanel>
+            </Expander>
+            <Expander Header="顯示選項" IsExpanded="True" Background="{x:Null}" Foreground="#FF6AFD43" BorderThickness="0,0,0,1" BorderBrush="#FF6AFD43" Margin="2,3,2,0">
+                <WrapPanel>
+                    <CheckBox x:Name="chkShowProcess" Content="顯示過程" Checked="ChkShowProcess_Checked" Unchecked="ChkShowProcess_Unchecked" Foreground="#FF6AFD43" Margin="5,5,0,9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="95" Cursor="Hand" Background="#FFFFFA00" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkshowGraphic" Content="顯示圖形" Checked="ChkshowGraphic_Checked" Unchecked="ChkshowGraphic_Unchecked" Foreground="#FF6AFD43" Margin="5,5,0,9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="95" Cursor="Hand" Background="#FFFFFA00" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkshowMonitor" Content="顯示進度" Checked="ChkshowMonitor_Checked" Unchecked="ChkshowMonitor_Unchecked" Foreground="#FF6AFD43" Margin="5,5,0,9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="95" Cursor="Hand" Background="#FFFFFA00" BorderBrush="#FF43F232" />
+                    <CheckBox x:Name="chkshowInWeb" Content="顯示網頁" IsChecked="True" Checked="ChkshowInWeb_Checked" Unchecked="ChkshowInWeb_Unchecked" Foreground="#FF6AFD43" Margin="5,5,0,9" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="30" Width="95" Cursor="Hand" Background="#FFFFFA00" BorderBrush="#FF43F232" />
+                </WrapPanel>
+            </Expander>
+            <WrapPanel Width="778" Margin="2,3,2,0" Background="#FF050026">
+                <Button x:Name="btnReset" Content="重設" Click="BtnReset_Click" ToolTip="重設為初始設定" Width="100" Margin="10" Foreground="#FF6AFD43" BorderBrush="#FF6AFD43" Background="{x:Null}" Cursor="Hand"/>
+                <Button x:Name="btnFreqAll" Content ="尋找全部" Click="BtnFreqAll_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand"/>
+                <Button x:Name="btnFreq" Content ="查詢頻率"  Click="BtnFreq_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnHit" Content ="中獎率"  Click="BtnHit_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnHitAll" Content ="總中獎率"  Click="BtnHitAll_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnLastHit" Content ="前期中獎率"  Click="BtnLastHit_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+            </WrapPanel>
+            <WrapPanel Margin="0,3,0,0" Width="776" Background="#FF021000">
+                <Button x:Name="btnTableOddEven" Content ="奇數-偶數表" Click="BtnTableOddEven_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableHighLow" Content ="大數-小數表" Click="BtnTableHighLow_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableSum" Content ="和數值表" Click="BtnTableSum_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableInterval" Content ="數字區間表" Click="BtnTableInterval_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableActive" Content ="冷熱門數字表" Click="BtnTableActive_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableDigits" Content ="末位數字表" Click="BtnTableDigits_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableDataN" Content ="數字振盪表" Click="BtnTableDataN_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableMissing" Content ="遺漏偏差表" Click="BtnTableMiss_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableMissingTotal" Content ="遺漏偏差總表" Click="BtnTableMissAll_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableMissingTotal01" Content ="遺漏偏差總表01" Click="BtnTableMissAll01_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTablePercent" Content ="百分比預測表" Click="BtnTablePercent_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTablePercent01" Content ="百分比預測表01" Click="BtnTablePercent01_Click" Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnLastNum" Content ="末期資料" Click="BtnLastNum_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnDoubleZero" Content ="雙零資料" Click="BtnDoubleZero_Click" Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTablePartner" Content ="伴侶數字表"  Width="100" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <Button x:Name="btnTableNeighborhood" Content ="鄰近數字表"  Width="110" Margin="10" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" Cursor="Hand" />
+                <TextBox x:Name="tbMatchCount" Height="21" TextWrapping="Wrap" Text="1" Width="45" Margin="10,5,0,5" Background="{x:Null}" TextChanged="TbMatchCount_TextChanged" Foreground="#FFEC1BF1" BorderBrush="#FFEC1BF1"/>
+                <TextBox x:Name="tbMatchMin" Height="21" TextWrapping="Wrap" Text="1" Width="45" Margin="10,5,0,5" Background="{x:Null}" TextChanged="TbMatchMin_TextChanged" Foreground="#FFEC1BF1" BorderBrush="#FFEC1BF1"/>
+                <Button x:Name="btnMatch" Content ="週期同步效應" Click="BtnMatch_Click"  Width="109.7" Margin="10" Foreground="#FFEC1BF1" Background="{x:Null}" BorderBrush="#FFEC1BF1" Cursor="Hand" />
+            </WrapPanel>
+            <Expander Header="聰明組合" Foreground="#FF37F30C" IsExpanded="True" Background="{x:Null}">
+                <StackPanel Margin="3,0">
+                    <WrapPanel Orientation="Horizontal" Margin="0,2,0,0">
+                        <Label x:Name="lblOdds" Content="奇數" Background="{x:Null}" Foreground="#FF6AFD43" BorderThickness="0" Margin="7,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="40" FontSize="14"/>
+                        <TextBox x:Name="tbOdds" Background="{x:Null}" Margin="7,2,0,2" Width="50" Foreground="#FF43F232" BorderBrush="#FF43F232" FontSize="14"/>
+                        <Label x:Name="lblHigh" Content="大數" Background="{x:Null}" Margin="7,0,0,0" Foreground="#FF6AFD43" Width="40" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14"/>
+                        <TextBox x:Name="tbHigh" Background="{x:Null}" Margin="7,2,0,2" Width="50" Foreground="#FF43F232" BorderBrush="#FF43F232" FontSize="14"/>
+                        <Label x:Name="lblHot" Content="熱門" Background="{x:Null}" Margin="7,0,0,0" Foreground="#FF6AFD43" Width="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14"/>
+                        <TextBox x:Name="tbHot" Background="{x:Null}" Margin="7,2,0,2" Width="50" Foreground="#FF43F232" BorderBrush="#FF43F232" FontSize="14"/>
+                        <Label x:Name="lblSumMin" Content="和數值低" Background="{x:Null}" Foreground="#FF6AFD43" Margin="7,0,0,0" Width="65" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14"/>
+                        <TextBox x:Name="tbSumMin" Background="{x:Null}" Margin="7,2,0,2" Width="50" Foreground="#FF43F232" BorderBrush="#FF43F232" FontSize="14"/>
+                        <Label x:Name="lblSumMax" Content="和數值高" Background="{x:Null}" Margin="7,0,0,0" Foreground="#FF6AFD43" Width="65" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="14"/>
+                        <TextBox x:Name="tbSumMax" Background="{x:Null}" Margin="7,2,0,2" Width="50" Foreground="#FF43F232" BorderBrush="#FF43F232" FontSize="14"/>
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal">
+                        <Label x:Name="lblTestNum" Content="測試數字" Margin="5,5,0,5" Background="{x:Null}" Foreground="#FF6AFD43" Width="90"/>
+                        <TextBox x:Name="tbTestNum" Margin="5,5,0,5" Background="{x:Null}" VerticalContentAlignment="Center" Width="500" Foreground="#FF43F232" BorderBrush="#FF43F232"/>
+                        <Button x:Name="btnSmartRun" Content ="計算組合" Click="BtnSmartRun_Click"  Width="90" Margin="10,5,0,5" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" FontSize="14" HorizontalAlignment="Left" />
+                    </WrapPanel>
+                    <WrapPanel Orientation="Horizontal" Margin="0,5,0,0" >
+                        <Button x:Name="btnSmartTest" Content ="聰明組合" Click="BtnSmartTest_Click" Width="90" Margin="7,0,0,0" Foreground="#FF6AFD43" Background="{x:Null}" BorderBrush="#FF6AFD43" FontSize="14" HorizontalAlignment="Left"  />
+                        <Label Content="(數字分隔： ',' ，分柱分隔：'#' ，分隔階層：　＂, ＜ #　＂)" Margin="5,5,0,5" Background="{x:Null}" Foreground="#FF6AFD43"/>
+                    </WrapPanel>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+        <StatusBar x:Name="StatusBar00" Background="#FF100033" BorderBrush="#FF6AFD43" BorderThickness="0,1" Foreground="#FF6AFD43" Margin="0,550,0,0">
+            <Grid Width="783">
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0" HorizontalAlignment="Left">
+                    <Grid x:Name="gSearchAll" Margin="0" >
+                        <ProgressBar x:Name="pbStatusProcess" Width="250" Margin="0,0,0,0" Visibility="Hidden" Grid.RowSpan="2" />
+                        <TextBlock x:Name="tbStatusTextBlock" Text="Ready" Margin="0,1,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF43F232" Grid.RowSpan="2"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </StatusBar>
+    </Grid>
+
+</Page>

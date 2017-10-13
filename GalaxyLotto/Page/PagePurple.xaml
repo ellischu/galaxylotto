@@ -1,0 +1,84 @@
+﻿<Page x:Name="CreatPurpleXAML" x:Class="GalaxyLotto.CreatPurple"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GalaxyLotto"
+        mc:Ignorable="d"
+        Title="紫微算盤" Height="670" Width="800"  Loaded="CreatPurpleXAML_Loaded">
+    <Grid>
+        <Menu x:Name="menu" Height="30" VerticalAlignment="Top">
+            <RadioButton x:Name="rbMale" GroupName="gender" IsChecked="True" Content="男" VerticalContentAlignment="Center" Checked="RadioButton_Checked" Tag="1" BorderBrush="#FF0769EC" Foreground="#FF0769EC"/>
+            <RadioButton x:Name="rbFemale" GroupName="gender" Content="女" VerticalContentAlignment="Center" Checked="RadioButton_Checked" Tag="2" BorderBrush="#FF0769EC" Foreground="#FF0769EC"></RadioButton>
+            <Label x:Name="label4" Content="西元" IsHitTestVisible="True" Padding="1"/>
+            <ComboBox x:Name="cmbWYear" Width="110" SelectionChanged="CmbWYear_SelectionChanged" BorderBrush="{x:Null}"/>
+            <Label x:Name="label" Content="年" Padding="1"/>
+            <ComboBox x:Name="cmbWMonth" Width="50" SelectionChanged="CmbWMonth_SelectionChanged" BorderBrush="{x:Null}"/>
+            <Label x:Name="label1" Content="月" Padding="1"/>
+            <ComboBox x:Name="cmbWDay" Width="50" SelectionChanged="CmbWDay_SelectionChanged" BorderBrush="{x:Null}"/>
+            <Label x:Name="label2" Content="日" Padding="1"/>
+            <ComboBox x:Name="cmbWHour" Width="160" SelectionChanged="CmbWHour_SelectionChanged" BorderBrush="{x:Null}"/>
+            <Label x:Name="label3" Content="時" Padding="1"/>
+            <Button x:Name="btnCreate" Content="建立" IsDefault="True" Width="60" Background="#FF7783E8" BorderBrush="{x:Null}" Foreground="#FFFEFF00" Click="BtnCreate_Click"/>
+        </Menu>
+
+        <StatusBar Height="25" VerticalAlignment="Bottom" FontSize="13.333">
+            <TextBlock x:Name="tbStatusBar" TextWrapping="Wrap" Text="Ready" HorizontalAlignment="Left" VerticalAlignment="Center" Width="600"/>
+        </StatusBar>
+        <StackPanel Margin="15,35,15,30">
+            <StackPanel Orientation="Horizontal" >
+                <Border x:Name="Border06" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp06"/>
+                </Border>
+                <Border x:Name="Border07" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp07"/>
+                </Border>
+                <Border x:Name="Border08" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp08"/>
+                </Border>
+                <Border x:Name="Border09" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp09"/>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <StackPanel>
+                    <Border x:Name="Border05" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                        <WrapPanel x:Name="wp05"/>
+                    </Border>
+                    <Border x:Name="Border04" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                        <WrapPanel x:Name="wp04"/>
+                    </Border>
+                </StackPanel>
+                <StackPanel>
+                    <Border BorderBrush="Black" BorderThickness="1" Height="300" Width="380">
+                        <StackPanel x:Name="sp00"/>
+                    </Border>
+                </StackPanel>
+                <StackPanel>
+                    <Border x:Name="Border10" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                        <WrapPanel x:Name="wp10"/>
+                    </Border>
+                    <Border x:Name="Border11" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                        <WrapPanel x:Name="wp11"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" >
+                <Border x:Name="Border03" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp03">
+                    </WrapPanel>
+                </Border>
+                <Border x:Name="Border02" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp02"/>
+                </Border>
+                <Border x:Name="Border01" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp01"/>
+                </Border>
+                <Border x:Name="Border12" BorderBrush="Black" BorderThickness="1" Height="150" Width="190">
+                    <WrapPanel x:Name="wp12"/>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Page>

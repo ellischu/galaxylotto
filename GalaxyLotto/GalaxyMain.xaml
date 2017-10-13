@@ -1,0 +1,333 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:Custom="http://schemas.microsoft.com/winfx/2006/xaml/presentation/ribbon" 
+        xmlns:local="clr-namespace:GalaxyLotto"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Properties="clr-namespace:GalaxyLotto.Properties"
+        mc:Ignorable="d"
+        x:Name="GalaxyMainXAML" 
+        x:Class="GalaxyLotto.GalaxyMain"
+        Title="GalaxyLotto" Height="230" Width="500" Icon="pack://siteoforigin:,,,/Resources/planet.ico" 
+        WindowStartupLocation="Manual" 
+        Closed="GalaxyMainXAML_Closed" ResizeMode="CanMinimize" >
+    <!--xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"-->
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo x:Name="taskBarItemInfo1"/>
+    </Window.TaskbarItemInfo>
+    <Window.Resources>
+        <Style x:Key="{x:Type MenuItem}" TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate  TargetType="{x:Type MenuItem}">
+                        <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+                                <RadioButton Margin="3" IsChecked="{TemplateBinding IsChecked}" VerticalAlignment="Center" x:Name="GlyphPanel" Visibility="Collapsed"/>
+                                <ContentPresenter ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="1" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}" Placement="Bottom">
+                                    <Border x:Name="SubMenuBorder" BorderBrush="#FF999999" BorderThickness="1" Background="#FFF0F0F0" Padding="2">
+                                        <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
+                                            <Grid RenderOptions.ClearTypeHint="Enabled">
+                                                <Canvas HorizontalAlignment="Left" Height="0" VerticalAlignment="Top" Width="0">
+                                                    <Rectangle x:Name="OpaqueRect" Fill="{Binding Background, ElementName=SubMenuBorder}" Height="{Binding ActualHeight, ElementName=SubMenuBorder}" Width="{Binding ActualWidth, ElementName=SubMenuBorder}"/>
+                                                </Canvas>
+                                                <Rectangle Fill="#FFD7D7D7" HorizontalAlignment="Left" Margin="29,2,0,2" Width="1"/>
+                                                <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Cycle" Grid.IsSharedSizeScope="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" KeyboardNavigation.TabNavigation="Cycle"/>
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSuspendingPopupAnimation" Value="True">
+                                <Setter Property="PopupAnimation" TargetName="PART_Popup" Value="None"/>
+                            </Trigger>
+                            <Trigger Property="Icon" Value="{x:Null}">
+                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter Property="Background" TargetName="templateRoot" Value="#3D26A0DA"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                                <Setter Property="Visibility" TargetName="GlyphPanel" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="CanContentScroll" SourceName="SubMenuScrollViewer" Value="False">
+                                <Setter Property="Canvas.Top" TargetName="OpaqueRect" Value="{Binding VerticalOffset, ElementName=SubMenuScrollViewer}"/>
+                                <Setter Property="Canvas.Left" TargetName="OpaqueRect" Value="{Binding HorizontalOffset, ElementName=SubMenuScrollViewer}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ItemcontainerStyle" TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate  TargetType="{x:Type MenuItem}">
+                        <Border x:Name="templateRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <Grid Margin="-1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
+                                    <ColumnDefinition Width="13"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition SharedSizeGroup="MenuItemIGTColumnGroup" Width="Auto"/>
+                                    <ColumnDefinition Width="20"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
+                                <Border x:Name="GlyphPanel" BorderBrush="#FF26A0DA" BorderThickness="1" Background="#3D26A0DA" ClipToBounds="False" HorizontalAlignment="Center" Height="22" Margin="-1,0,0,0" Visibility="Hidden" VerticalAlignment="Center" Width="22">
+                                    <RadioButton x:Name="Glyph" IsChecked="{TemplateBinding IsChecked}" GroupName="a"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                </Border>
+                                <ContentPresenter x:Name="menuHeaderContainer" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Grid.Column="2" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="menuGestureText" Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Icon" Value="{x:Null}">
+                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger  Property="IsChecked" Value="True">
+                                <Setter Property="Visibility" TargetName="GlyphPanel" Value="Visible"/>
+                                <Setter Property="Visibility" TargetName="Icon" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger SourceName="Glyph"  Property="IsChecked" Value="False">
+                                <Setter Property="Visibility" TargetName="GlyphPanel" Value="Hidden"/>
+                                <Setter Property="Visibility" TargetName="Glyph" Value="Collapsed"/>
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter Property="Background" TargetName="templateRoot" Value="#3D26A0DA"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="#FF26A0DA"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="TextElement.Foreground" TargetName="templateRoot" Value="#FF707070"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsHighlighted" Value="True"/>
+                                    <Condition Property="IsEnabled" Value="False"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Background" TargetName="templateRoot" Value="#0A000000"/>
+                                <Setter Property="BorderBrush" TargetName="templateRoot" Value="#21000000"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid x:Name="MainGrid00">
+        <Menu x:Name="menu" VerticalAlignment="Top" Panel.ZIndex="1" >
+            <MenuItem Header="首頁" Click="GoMainPage_Click">
+                <MenuItem.Icon >
+                    <Image Source="pack://siteoforigin:,,,/Resources/home.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="更新">
+                <MenuItem.Icon>
+                    <Image Source="Resources/btnUpdate.ico" Stretch="UniformToFill" />
+                </MenuItem.Icon>
+                <MenuItem x:Name="miUpdateBig" Header="大樂透更新" Click="MiUpdateBig_Click" Cursor="Hand">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Big.jpg" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdate539" Header="539更新" Click="MiUpdate539_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/l539.jpg" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdateDafu" Header="大福彩更新" Click="MiUpdateDafu_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Dafu.jpg" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdateWeli" Header="威力彩更新" Click="MiUpdateWeli_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Weli.jpg" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdateSix" Header="六合彩更新" Click="MiUpdateSix_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Six.jpg" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem x:Name="miUpdateWC" Header="中西曆更新" Click="MiUpdateWC_Click">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/btnFilecabinet.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdatePurple" Header="紫微資料更新" Click="MiUpdatePurple_Click" >
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/btnFilecabinet.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem x:Name="miUpdateOptions" Header="參數資料更新" Click="MiUpdateOptions_Click"  >
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/btnFilecabinet.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem x:Name="miSearchFreq" Header="搜尋" Click="MiSearchFreq_Click" Cursor="Hand">
+                <MenuItem.Icon>
+                    <Image Source="pack://siteoforigin:,,,/Resources/btnSettings.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="功能">
+                <MenuItem.Icon>
+                    <Image Source="pack://siteoforigin:,,,/Resources/btnSettings.png" />
+                </MenuItem.Icon>
+                <MenuItem x:Name="miMonitor" Header="進度視窗" Click="MiMonitor_Click" Cursor="Hand">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/btnSettings.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="程式圖示" >
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/planet.ico" />
+                    </MenuItem.Icon>
+                    <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Horizontal" >
+                            <RadioButton x:Name="planet" IsChecked="True" GroupName="NotifyIcon" Padding="0" Margin="0,5,0,0" Checked="ChangeIcon"/>
+                            <Label Content="planet" Padding="5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <RadioButton x:Name="planet_venus" GroupName="NotifyIcon" Padding="0" Margin="0,5,0,0" Checked="ChangeIcon"/>
+                            <Label Content="planet_venus" Padding="5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <RadioButton x:Name="planet_asteroid" GroupName="NotifyIcon" Margin="0,5,0,0" Checked="ChangeIcon"/>
+                            <Label Content="planet_asteroid" Padding="5,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" >
+                            <RadioButton x:Name="planet_blackhole" GroupName="NotifyIcon" Margin="0,5,0,0" Checked="ChangeIcon"/>
+                            <Label Content="planet_blackhole" Padding="5,0" />
+                        </StackPanel>
+                    </StackPanel>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="相關">
+                <MenuItem.Icon>
+                    <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                </MenuItem.Icon>
+                <MenuItem Header="樂透相關">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                    </MenuItem.Icon>
+                    <MenuItem x:Name="miTaiwanLottoLink" Header="台灣彩券網站" Click="MiTaiwanLottoLink_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="minfdLink" Header="電腦彩券樂透網 " Click="MinfdLink_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="miarcLink" Header="樂透研究院 " Click="MiarcLink_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="miLotto080eLink" Header="080e 贏發贏易" Click="MiLotto080eLink_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="miLotto168Link" Header="樂透彩168" Click="MiLotto168Link_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="miauzonetLink" Header="奧索樂透網" Click="MiauzonetLink_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mibestshopLink" Header="樂透彩資訊網" Click="MibestshopLink_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mihkjc" Header="六合彩官網" Click="Mihkjc_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="mipilio" Header="樂透彩幸運發財網" Click="Mipilio_Click">
+                        <MenuItem.Icon>
+                            
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="miolotw" Header="棋王資訊科技網" Click="Miolotw_Click">
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="命理相關">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                    </MenuItem.Icon>
+                    <MenuItem x:Name="milead" Header="百合命相" Click="Milead_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="micfarmcale" Header="網路農民曆" Click="Micfarmcale_Click"  >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="micfarmcale01" Header="網路農民曆01" Click="Micfarmcale01_Click"  >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>                    
+                </MenuItem>
+                <MenuItem Header="其他連結">
+                    <MenuItem.Icon>
+                        <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                    </MenuItem.Icon>
+                    <MenuItem x:Name="miGeomagnetic" Header="日本地磁" Click="MiGeomagnetic_Click" >
+                        <MenuItem.Icon>
+                            <Image Source="pack://siteoforigin:,,,/Resources/Web.jpg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="紫薇" Click="ShowPurple" Cursor="Hand">
+                <MenuItem.Icon>
+                    <Image Source="pack://siteoforigin:,,,/Resources/btnSettings.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="離開" Click="RbClose_Click">
+                <MenuItem.Icon >
+                    <Image Source="pack://siteoforigin:,,,/Resources/btnclose01.png"/>
+                </MenuItem.Icon>
+            </MenuItem>
+        </Menu>
+        <Frame x:Name="frmMain" Source="/GalaxyLotto;component/Page01.xaml" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="0,25,0,0" NavigationUIVisibility="Hidden" />
+        <!--<StatusBar x:Name="StatusBar00" Grid.Row="1" VerticalAlignment="Bottom">
+            <Grid x:Name="gStatus" Margin="2">
+                <ProgressBar x:Name="pbStatusProcessBar" Orientation="Horizontal" Visibility="Hidden" ValueChanged="pbStatusProcessBar_ValueChanged" Width="400" />
+                <TextBlock x:Name="tbStatusTextBlock" Text="Ready" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" />
+            </Grid>
+        </StatusBar>-->
+    </Grid>
+</Window>
