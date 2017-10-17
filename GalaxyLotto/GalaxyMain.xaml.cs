@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Xml;
-using System.Data.SqlClient;
 using System.Data;
-using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Threading;
-using System.Windows.Controls.Primitives;
-using System.ComponentModel;
 using GalaxyLotto.ClassLibrary;
 using System.Text;
-using static GalaxyLotto.ClassLibrary.CGLStructure;
+using static GalaxyLotto.ClassLibrary.CGLSearch;
 
 namespace GalaxyLotto
 {

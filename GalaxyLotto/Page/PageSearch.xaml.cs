@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
@@ -13,18 +12,18 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
-using Arction.WinForms.Charting;
 using GalaxyLotto.ClassLibrary;
 using System.Printing;
 using System.Windows.Markup;
 using System.Diagnostics;
-using static GalaxyLotto.ClassLibrary.CGLStructure;
 using System.Windows.Controls.Primitives;
+using static GalaxyLotto.ClassLibrary.CGLSearch;
+using static GalaxyLotto.ClassLibrary.CGLData;
+using static GalaxyLotto.ClassLibrary.CGLOption;
+using static GalaxyLotto.ClassLibrary.CGLFreq;
+using static GalaxyLotto.ClassLibrary.GLStructure;
 
 namespace GalaxyLotto
 {
@@ -110,7 +109,7 @@ namespace GalaxyLotto
             {
                 lstCompare.Sort();
                 stuReturn.StrCompares = string.Join("#", lstCompare.Distinct());
-                //stuReturn = new CGLFuncSearch().SetComparesDetail(stuReturn);
+                //stuReturn = new CGLSearch().SetComparesDetail(stuReturn);
             }
             else
             {
@@ -631,7 +630,7 @@ namespace GalaxyLotto
         private StuGLSearch ButtonClick(StuGLSearch stuSearch00)
         {
             stuSearch00 = SetCompareString(stuSearch00);
-            //stuSearch00 = new CGLFuncSearch().InitSearch(stuSearch00);
+            //stuSearch00 = new CGLSearch().InitSearch(stuSearch00);
             return stuSearch00;
         }
 
@@ -716,7 +715,7 @@ namespace GalaxyLotto
             Dictionary<string, object> dicFreq = new Dictionary<string, object>
             {
                 { "stuSearch", stuSearchFreq },
-                { "dicFreq", new CGLFuncFreq().GetFreqdic(stuSearchFreq) }
+                { "dicFreq", new CGLFreq().GetFreqdic(stuSearchFreq) }
             };
             e.Result = dicFreq;
         }
@@ -728,7 +727,7 @@ namespace GalaxyLotto
         private void ShowResult(StuGLSearch gstuGLSearch, Dictionary<string, object> colResultFreq)
         {
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
-            Dictionary<string, int> dicCurrentNums = new CGLFuncSearch().GetCurrentDataNums(gstuGLSearch);
+            Dictionary<string, int> dicCurrentNums = new CGLSearch().GetCurrentDataNums(gstuGLSearch);
             string strTemp;
             #region Set ProcessBar
             double value = 0;
@@ -805,7 +804,7 @@ namespace GalaxyLotto
                 Background = Brushes.YellowGreen
             };
 
-            expCurrentData.Content = new CGLFuncSearch().GetCurrentDataSp(gstuGLSearch);
+            expCurrentData.Content = new CGLSearch().GetCurrentDataSp(gstuGLSearch);
             stackPanel.Children.Add(expCurrentData);
             #endregion
 
@@ -1090,8 +1089,8 @@ namespace GalaxyLotto
             {
                 StuGLSearch stuSearchAll01 = ButtonClick(stuRibbonSearchOption);
                 #region 設定 stuSearchAll01
-                //stuSearchAll01 = new CGLFuncSearch().InitSearch(stuSearchAll01);
-                //stuSearchAll01 = new CGLFuncSearch().GetMethodSN(stuSearchAll01);
+                //stuSearchAll01 = new CGLSearch().InitSearch(stuSearchAll01);
+                //stuSearchAll01 = new CGLSearch().GetMethodSN(stuSearchAll01);
                 btnFreqAll.Content = "取消尋找";
                 pbStatusProcess.Value = 0;
                 pbStatusProcess.Visibility = Visibility.Visible;
@@ -1180,10 +1179,10 @@ namespace GalaxyLotto
                         LngMethodSN = long.Parse(sdrReader[0].ToString())  //read lngMethodSN
                     };
                     stuMethod00 = stuMethod00.RebuildstuMethod(stuMethod00);               //get the stuMethod structure
-                    stuSearchTemp = new CGLFuncSearch().FromstuMethod(stuSearchTemp, stuMethod00); //rebuild the stuSearchTemp
+                    stuSearchTemp = new CGLSearch().FromstuMethod(stuSearchTemp, stuMethod00); //rebuild the stuSearchTemp
                     stuSearchTemp.LngCurrentData = stuSearch00.LngCurrentData - 1;  //test the data of previous date
                     stuSearchTemp.IntInvestNums = 10;                               //that intInestNums equal to 10
-                    if (!new CGLFuncSearch().HasHitAllData(stuSearchTemp))                //Does it have Data
+                    if (!new CGLSearch().HasHitAllData(stuSearchTemp))                //Does it have Data
                     {
                         int intCount;
                         Dictionary<string, string> dicReport = new Dictionary<string, string>();
@@ -1235,12 +1234,12 @@ namespace GalaxyLotto
                                 bwMyWork.ReportProgress(1, dicReport);
                                 //Console.WriteLine("Freq : {0}/{1}", intTotalSN, intQueryEnd);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLSearch().InitSearch(stuSearchTemp);
 
-                                if (!new CGLFuncFreq().HasFreqData(stuSearchTemp))
+                                if (!new CGLFreq().HasFreqData(stuSearchTemp))
                                 {
                                     //Console.WriteLine("SearchFreq : {0}", intTotalSN);
-                                    foreach (DataRow drRow in new CGLFuncFreq().GetFreqTb(stuSearchTemp).Rows)
+                                    foreach (DataRow drRow in new CGLFreq().GetFreqTb(stuSearchTemp).Rows)
                                     {
                                         DataRow drRow00 = dtFreq.NewRow();
                                         for (int i = 1; i < dtFreq.Columns.Count; i++)
@@ -1321,18 +1320,18 @@ namespace GalaxyLotto
                             {
                                 bwMyWork.ReportProgress(1, dicReport);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLSearch().InitSearch(stuSearchTemp);
 
                                 #region 處理所有非零的頻率
                                 dicSortFreq.Clear();
-                                dicSortFreq = new CGLFuncFreq().GetSortedFreqdic(stuSearchTemp);
+                                dicSortFreq = new CGLFreq().GetSortedFreqdic(stuSearchTemp);
                                 string[] strNoneZeroFreq = new CGLFunc().GetNonZeroArray(dicSortFreq);
                                 #endregion 處理所有非零的頻率
 
                                 for (int intInvest = DataSet00.CountNumber; intInvest <= 10; intInvest++)
                                 {
                                     stuSearchTemp.IntInvestNums = intInvest;
-                                    if (!new CGLFuncSearch().HasHitData(stuSearchTemp) && !new CGLFuncSearch().IsCurrentNumsZero(stuSearchTemp))
+                                    if (!new CGLSearch().HasHitData(stuSearchTemp) && !new CGLSearch().IsCurrentNumsZero(stuSearchTemp))
                                     {
                                         if ((intInvest <= strNoneZeroFreq.Length) && (strNoneZeroFreq.Length > 0))
                                         {
@@ -1344,7 +1343,7 @@ namespace GalaxyLotto
                                             }
                                             stuSearchTemp.StrHitTestNums = String.Join("#", strInvest);
                                             //Console.WriteLine("SearchHit : {0}/{1}", intInvest, intTotalSN);
-                                            foreach (DataRow drRow in new CGLFuncSearch().SearchHitTable(stuSearchTemp).Rows)
+                                            foreach (DataRow drRow in new CGLSearch().SearchHitTable(stuSearchTemp).Rows)
                                             {
                                                 DataRow drRow00 = dtHit.NewRow();
                                                 for (int i = 1; i < dtHit.Columns.Count; i++)
@@ -1457,15 +1456,15 @@ namespace GalaxyLotto
                                 bwMyWork.ReportProgress(1, dicReport);
                                 //Console.WriteLine("HitAll : {0}/{1}", intTotalSN, intQueryEnd);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLSearch().InitSearch(stuSearchTemp);
 
                                 for (int intInvest = DataSet00.CountNumber; intInvest <= 10; intInvest++)
                                 {
                                     stuSearchTemp.IntInvestNums = intInvest;
-                                    if (!new CGLFuncSearch().IsCurrentNumsZero(stuSearchTemp) && !new CGLFuncSearch().HasHitAllData(stuSearchTemp))
+                                    if (!new CGLSearch().IsCurrentNumsZero(stuSearchTemp) && !new CGLSearch().HasHitAllData(stuSearchTemp))
                                     {
                                         //Console.WriteLine("SearchHitAll : {0}/{1}", intInvest, intTotalSN);
-                                        DataTable dtReturn = new CGLFuncSearch().SearchHitAllTable(stuSearchTemp);
+                                        DataTable dtReturn = new CGLSearch().SearchHitAllTable(stuSearchTemp);
                                         foreach (DataRow drRow in dtReturn.Rows)
                                         {
                                             //dtHitAll.ImportRow(drRow);
@@ -1522,8 +1521,8 @@ namespace GalaxyLotto
         {
             #region 設定 stuSearchHit
             StuGLSearch stuSearchHit = ButtonClick(stuRibbonSearchOption);
-            //stuSearchHit = new CGLFuncSearch().InitSearch(stuSearchHit);
-            //stuSearchHit = new CGLFuncSearch().GetMethodSN(stuSearchHit);
+            //stuSearchHit = new CGLSearch().InitSearch(stuSearchHit);
+            //stuSearchHit = new CGLSearch().GetMethodSN(stuSearchHit);
             #endregion 設定 stuSearchHit
             bwHit = new BackgroundWorker()
             {
@@ -1570,11 +1569,11 @@ namespace GalaxyLotto
             Dictionary<string, double> dicCurrentSortResult = new Dictionary<string, double>();
             string[] strCurrentNoneZero;
 
-            dicCurrentSortResult = new CGLFuncFreq().GetSortedFreqdic(stuSearch00);
+            dicCurrentSortResult = new CGLFreq().GetSortedFreqdic(stuSearch00);
             strCurrentNoneZero = new CGLFunc().GetNonZeroArray(dicCurrentSortResult);
 
             #region Set Current data
-            dicCurrentHitResult.Add("CurrentData", new CGLFuncSearch().GetCurrentData(stuSearch00));
+            dicCurrentHitResult.Add("CurrentData", new CGLSearch().GetCurrentData(stuSearch00));
             #endregion Set Current data
 
             dicCurrentHitResult.Add("TestNums:", string.Join("#", strCurrentNoneZero));
@@ -1590,13 +1589,13 @@ namespace GalaxyLotto
 
                 stuSearch00.StrHitTestNums = String.Join("#", strCurrentSubTest);
                 stuSearch00.IntInvestNums = intInvest;
-                if (!new CGLFuncSearch().HasHitData(stuSearch00) && !new CGLFuncSearch().IsCurrentNumsZero(stuSearch00))
+                if (!new CGLSearch().HasHitData(stuSearch00) && !new CGLSearch().IsCurrentNumsZero(stuSearch00))
                 {
                     //Console.WriteLine("Search Hit {0}:", stuSearch00.lngCurrentData);
-                    new CGLFuncSearch().SearchHit(stuSearch00);
+                    new CGLSearch().SearchHit(stuSearch00);
                 }
                 StuGLHit stuCurrentHit = new StuGLHit();
-                stuCurrentHit = new CGLFuncSearch().SetHit(stuSearch00);
+                stuCurrentHit = new CGLSearch().SetHit(stuSearch00);
                 stuCurrentHit = stuCurrentHit.GetHitSN(stuCurrentHit);
 
                 dicCurrentHitResult.Add(intInvest.ToString() + " > " + stuCurrentHit.StrHitTestNums, stuCurrentHit.ToDicionary(stuCurrentHit));
@@ -1610,13 +1609,13 @@ namespace GalaxyLotto
             string[] strPreviousNoneZero;
             StuGLSearch stuPreviosSearch = stuSearch00;
             stuPreviosSearch.LngCurrentData = stuSearch00.LngCurrentData - 1;
-            //stuPreviosSearch = new CGLFuncSearch().InitSearch(stuPreviosSearch);
+            //stuPreviosSearch = new CGLSearch().InitSearch(stuPreviosSearch);
 
-            dicPreviousSortResult = new CGLFuncFreq().GetSortedFreqdic(stuPreviosSearch);
+            dicPreviousSortResult = new CGLFreq().GetSortedFreqdic(stuPreviosSearch);
             strPreviousNoneZero = new CGLFunc().GetNonZeroArray(dicPreviousSortResult);
 
             #region Set Previous data
-            dicPreviousHitResult.Add("PreviousData", new CGLFuncSearch().GetCurrentData(stuPreviosSearch));
+            dicPreviousHitResult.Add("PreviousData", new CGLSearch().GetCurrentData(stuPreviosSearch));
             #endregion Set Previous data
 
             dicPreviousHitResult.Add("TestNums: ", string.Join("#", strPreviousNoneZero));
@@ -1632,13 +1631,13 @@ namespace GalaxyLotto
                 }
                 stuPreviosSearch.StrHitTestNums = String.Join("#", strPreviousSubTest);
                 stuPreviosSearch.IntInvestNums = intInvest;
-                if (!new CGLFuncSearch().HasHitData(stuPreviosSearch) && !new CGLFuncSearch().IsCurrentNumsZero(stuPreviosSearch))
+                if (!new CGLSearch().HasHitData(stuPreviosSearch) && !new CGLSearch().IsCurrentNumsZero(stuPreviosSearch))
                 {
                     //Console.WriteLine("Search Hit {0}:", stuPreviosSearch.lngCurrentData);
-                    new CGLFuncSearch().SearchHit(stuPreviosSearch);
+                    new CGLSearch().SearchHit(stuPreviosSearch);
                 }
                 StuGLHit stuPreviousHit = new StuGLHit();
-                stuPreviousHit = new CGLFuncSearch().SetHit(stuPreviosSearch);
+                stuPreviousHit = new CGLSearch().SetHit(stuPreviosSearch);
                 stuPreviousHit = stuPreviousHit.GetHitSN(stuPreviousHit);
 
                 dicPreviousHitResult.Add(intInvest.ToString() + " > " + stuPreviousHit.StrHitTestNums, stuPreviousHit.ToDicionary(stuPreviousHit));
@@ -1685,10 +1684,10 @@ namespace GalaxyLotto
             testdate = stuSearchHit;
             testdate.LngCurrentData = testdate.LngDataStart;
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+            dicCurrentData = new CGLSearch().GetCurrentData(testdate);
             lblTitle.Content += dicCurrentData["lngDateSN"] + " => ";
             testdate.LngCurrentData = testdate.LngDataEnd;
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+            dicCurrentData = new CGLSearch().GetCurrentData(testdate);
             lblTitle.Content += dicCurrentData["lngDateSN"];
 
             if (stuSearchHit.BoolFieldMode)
@@ -1898,7 +1897,7 @@ namespace GalaxyLotto
             //taskBarItemInfo1.ProgressValue = 0;
 
             StuGLSearch stuSearchHitAll = ButtonClick(stuRibbonSearchOption);
-            //stuSearchHitAll = new CGLFuncSearch().InitSearch(stuSearchHitAll);
+            //stuSearchHitAll = new CGLSearch().InitSearch(stuSearchHitAll);
             //stuSearchHitAll = stuSearchHitAll.GetMethodSN(stuSearchHitAll);
 
 
@@ -1965,22 +1964,22 @@ namespace GalaxyLotto
             };
             #endregion Setup
             #region 檢查 LastHit 是否有資料 
-            if (!new CGLFuncSearch().HasLastHitData(stuSearchLastHit, "tblLastHit00"))
+            if (!new CGLSearch().HasLastHitData(stuSearchLastHit, "tblLastHit00"))
             {
-                new CGLFuncSearch().SearchLastHit00(stuSearchLastHit);
+                new CGLSearch().SearchLastHit00(stuSearchLastHit);
             }
-            if (!new CGLFuncSearch().HasLastHitData(stuSearchLastHit, "tblLastHit01"))
+            if (!new CGLSearch().HasLastHitData(stuSearchLastHit, "tblLastHit01"))
             {
-                new CGLFuncSearch().SearchLastHit01(stuSearchLastHit);
+                new CGLSearch().SearchLastHit01(stuSearchLastHit);
             }
-            if (!new CGLFuncSearch().HasLastHitData(stuSearchLastHit, "tblLastHit02", 0, false))
+            if (!new CGLSearch().HasLastHitData(stuSearchLastHit, "tblLastHit02", 0, false))
             {
-                new CGLFuncSearch().SearchLastHit02(stuSearchLastHit);
+                new CGLSearch().SearchLastHit02(stuSearchLastHit);
             }
-            if (!new CGLFuncSearch().HasLastHitData(stuSearchLastHit, "tblLastHit03", 1, false))
+            if (!new CGLSearch().HasLastHitData(stuSearchLastHit, "tblLastHit03", 1, false))
             {
-                new CGLFuncSearch().SearchLastHitP(stuSearchLastHit, 1);
-                new CGLFuncSearch().SearchLastHitP(stuSearchLastHit, 2);
+                new CGLSearch().SearchLastHitP(stuSearchLastHit, 1);
+                new CGLSearch().SearchLastHitP(stuSearchLastHit, 2);
             }
             #endregion 檢查是否有資料
             e.Result = dicArgument;
@@ -2025,13 +2024,13 @@ namespace GalaxyLotto
 
 
             #region 導入 200 期 數值
-            //Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchOddEven);
-            DataTable dtDataTable = new CGLFuncOddEven().GetOddEven(stuSearchOddEven).Rows.Cast<DataRow>().Take(200).CopyToDataTable();
+            //Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchOddEven);
+            DataTable dtDataTable = new CGLOddEven().GetOddEven(stuSearchOddEven).Rows.Cast<DataRow>().Take(200).CopyToDataTable();
             #endregion 導入 200 期 數值
 
             //int[] intSection = { 5, 10, 25, 50, 100 };
             #region 計算 當期 奇數偶數 資料
-            DataTable dtDataNext = new CGLFuncOddEven().GetOddEvenNext(stuSearchOddEven, dtDataTable);
+            DataTable dtDataNext = new CGLOddEven().GetOddEvenNext(stuSearchOddEven, dtDataTable);
             #endregion
 
             #region Show Window
@@ -2195,7 +2194,7 @@ namespace GalaxyLotto
                 CanVerticallyScroll = true,
                 CanHorizontallyScroll = true
             };
-            spMain.Children.Add(new CGLFuncSearch().GetCurrentDataSp(stuSearchOddEven));
+            spMain.Children.Add(new CGLSearch().GetCurrentDataSp(stuSearchOddEven));
             spMain.Children.Add(expOddEven);
             spMain.Children.Add(expOddEvenNext);
             spMain.Children.Add(expOddEvenGraphic);
@@ -2256,7 +2255,7 @@ namespace GalaxyLotto
                 StrORDER = ""
             };
             DataTable dtDataTable = stuData00.GetSourceData(stuData00); ;
-            if (dtDataTable.Rows.Count == 0) { new CGLFuncSearch().SearchHighLow(stuSearchHighLow); }
+            if (dtDataTable.Rows.Count == 0) { new CGLSearch().SearchHighLow(stuSearchHighLow); }
             #endregion 檢查是否有資料
 
             int[] intSection = { 5, 10, 25, 50, 100 };
@@ -2265,7 +2264,7 @@ namespace GalaxyLotto
 
             #region Query String
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchHighLow);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchHighLow);
             stuData00 = new StuGLData()
             {
                 LottoType = stuSearchHighLow.LottoType,
@@ -2917,9 +2916,9 @@ namespace GalaxyLotto
             #endregion Setup
 
             #region Check tblMissAll ,Does it have Data?
-            if (!new CGLFuncSearch().HasSumData(stuSearchSum))
+            if (!new CGLSearch().HasSumData(stuSearchSum))
             {
-                new CGLFuncSearch().SearchSum(stuSearchSum);
+                new CGLSearch().SearchSum(stuSearchSum);
             }
             #endregion 檢查是否有資料
 
@@ -2929,7 +2928,7 @@ namespace GalaxyLotto
             #region 導入 200 期 數值
             #region Query String
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchSum);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchSum);
             StuGLData stuData00 = new StuGLData()
             {
                 LottoType = stuSearchSum.LottoType,
@@ -3161,7 +3160,7 @@ namespace GalaxyLotto
         {
             DataTable dtDataTable = dsSum.Tables["TableSum"];
             DataTable dtDataNext = dsSum.Tables["DataNext"];
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             #region Show Window
 
@@ -3561,7 +3560,7 @@ namespace GalaxyLotto
                 { "stuSearch", stuSearchInterval }
             };
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchInterval.LottoType);
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchInterval);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchInterval);
 
             #region 建立分區
             int intInterval01, intCountNum;
@@ -3614,7 +3613,7 @@ namespace GalaxyLotto
 
             #region 導入 100 期 數值
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchInterval);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchInterval);
 
             #region Query String
             StuGLData stuData00 = new StuGLData()
@@ -3768,7 +3767,7 @@ namespace GalaxyLotto
             DataTable dtDataInterval = dsIntervals.Tables["Interval"];
             DataTable dtDataInterval10 = dsIntervals.Tables["Interval10"];
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             #region Set lstCurreny
             List<int> lstCurrentData = new List<int>();
@@ -3924,25 +3923,25 @@ namespace GalaxyLotto
             stuSearchActive.IntDataOffset = 0;
             stuSearchActive.IntSearchLimit = 0;
             stuSearchActive.IntSearchOffset = 0;
-            stuSearchActive = new CGLFuncSearch().GetMethodSN(stuSearchActive);
+            stuSearchActive = new CGLSearch().GetMethodSN(stuSearchActive);
             #endregion 設定 stuSearchActive
 
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchActive.LottoType);
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
 
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchActive);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchActive);
 
             #region 檢查 tblMissAll 是否有資料
-            if (!new CGLFuncMiss().HasMissAllData(stuSearchActive))
+            if (!new CGLMissAll().HasMissAllData(stuSearchActive))
             {
-                new CGLFuncMiss().GetMissAlldic(stuSearchActive);
+                new CGLMissAll().GetMissAlldic(stuSearchActive);
             }
             #endregion 檢查是否有資料
 
             #region 檢查 tblActive是否有資料
-            if (!new CGLFuncSearch().HasActiveData(stuSearchActive))
+            if (!new CGLSearch().HasActiveData(stuSearchActive))
             {
-                new CGLFuncSearch().SearchActive(stuSearchActive);
+                new CGLSearch().SearchActive(stuSearchActive);
             }
             #endregion 檢查是否有資料
 
@@ -4091,7 +4090,7 @@ namespace GalaxyLotto
             #region 設定
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchDigits.LottoType);
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchDigits);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchDigits);
             Dictionary<string, int>[] dicALCount = new Dictionary<string, int>[6];
             DataTable[] dtTableDigits = new DataTable[6];
             DataTable[] dtDataShow = new DataTable[6];
@@ -4329,13 +4328,13 @@ namespace GalaxyLotto
             #endregion
             dicArgument.Add("stuSearch", stuSearchDataN);
             #region 檢查 DataN 是否有資料 
-            if (!new CGLFuncSearch().HasDataN(stuSearchDataN))
+            if (!new CGLSearch().HasDataN(stuSearchDataN))
             {
-                new CGLFuncSearch().SearchDataN(stuSearchDataN);
+                new CGLSearch().SearchDataN(stuSearchDataN);
             }
             #endregion 檢查是否有資料
 
-            List<int> lstCurrentNums = new CGLFuncSearch().GetlstCurrentNums(stuSearchDataN);
+            List<int> lstCurrentNums = new CGLSearch().GetlstCurrentNums(stuSearchDataN);
             int[] intSections = { 5, 10, 25, 50, 100 };
 
             #region Loading Top200 Datas
@@ -4513,7 +4512,7 @@ namespace GalaxyLotto
         {
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             DataGridTextColumn dgtColumn;
             #region Show Window
 
@@ -4611,7 +4610,7 @@ namespace GalaxyLotto
                     AutoGenerateColumns = false
                 };
                 #region Set Columns of DataGrid dgDataN
-                List<int> lstCurrentNums = new CGLFuncSearch().GetlstCurrentNums(stuSearch00);
+                List<int> lstCurrentNums = new CGLSearch().GetlstCurrentNums(stuSearch00);
                 if (dgDataN.Columns.Count == 0)
                 {
                     List<string> cName = new List<string>();
@@ -4783,12 +4782,12 @@ namespace GalaxyLotto
 
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchMiss.LottoType);
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchMiss);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchMiss);
 
             #region 檢查 tblActive是否有資料
-            if (!new CGLFuncSearch().HasActiveData(stuSearchMiss))
+            if (!new CGLSearch().HasActiveData(stuSearchMiss))
             {
-                new CGLFuncSearch().SearchActive(stuSearchMiss);
+                new CGLSearch().SearchActive(stuSearchMiss);
             }
             #endregion 檢查是否有資料
 
@@ -4800,7 +4799,7 @@ namespace GalaxyLotto
             };
             #endregion StackPanel
 
-            dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchMiss);
+            dicCurrentData = new CGLSearch().GetCurrentData(stuSearchMiss);
             for (int intTrace = 5; intTrace <= 10; intTrace++)
             {
                 #region 導入數值
@@ -5094,7 +5093,7 @@ namespace GalaxyLotto
             Dictionary<string, object> dicMissAll = new Dictionary<string, object>
             {
                 { "stuSearch", stuSearchMissAll },
-                { "dicMissAll", new CGLFuncMiss().GetMissAlldic(stuSearchMissAll,3,"DESC") }
+                { "dicMissAll", new CGLMissAll().GetMissAlldic(stuSearchMissAll,3,"DESC") }
             };
             #endregion
             e.Result = dicMissAll;
@@ -5121,7 +5120,7 @@ namespace GalaxyLotto
             StuGLSearch stuSearch00 = (StuGLSearch)dicInput["stuSearch"];
             Dictionary<string, object> dicMissAll = (Dictionary<string, object>)dicInput["dicMissAll"];
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
-            List<int> lstCurrentNums = new CGLFuncSearch().GetlstCurrentNums(stuSearch00);
+            List<int> lstCurrentNums = new CGLSearch().GetlstCurrentNums(stuSearch00);
             #region spMain
             StackPanel spMain = new StackPanel()
             {
@@ -5132,7 +5131,7 @@ namespace GalaxyLotto
             #endregion
 
             #region Current Data
-            spMain.Children.Add(new CGLFuncSearch().GetCurrentDataSp(stuSearch00));
+            spMain.Children.Add(new CGLSearch().GetCurrentDataSp(stuSearch00));
             #endregion
 
             #region ScrollViewer
@@ -5580,7 +5579,7 @@ namespace GalaxyLotto
             stuSearchMissAll01.IntSearchOffset = 0;
             stuSearchMissAll01.StrCompares = "gen";
             stuSearchMissAll01.BoolFieldMode = false;
-            stuSearchMissAll01 = new CGLFuncSearch().GetMethodSN(stuSearchMissAll01);
+            stuSearchMissAll01 = new CGLSearch().GetMethodSN(stuSearchMissAll01);
             #endregion 設定 stuSearchMissAll
 
             #region Setting bwTablePercent
@@ -5610,9 +5609,9 @@ namespace GalaxyLotto
             };
             #endregion
             #region 檢查 MissAll01 是否有資料 
-            if (!new CGLFuncMiss().HasMissAll01Data(stuSearchMissAll01))
+            if (!new CGLMissAll().HasMissAll01Data(stuSearchMissAll01))
             {
-                new CGLFuncMiss().SearchMissAll01(stuSearchMissAll01);
+                new CGLMissAll().SearchMissAll01(stuSearchMissAll01);
             }
             #endregion 檢查是否有資料
             e.Result = dicArgument;
@@ -5657,7 +5656,7 @@ namespace GalaxyLotto
             stuSearchPercent.IntSearchOffset = 0;
             stuSearchPercent.StrCompares = "gen";
             stuSearchPercent.BoolFieldMode = false;
-            stuSearchPercent = new CGLFuncSearch().GetMethodSN(stuSearchPercent);
+            stuSearchPercent = new CGLSearch().GetMethodSN(stuSearchPercent);
             #endregion 設定 stuSearchPercent
             #region Setting bwTablePercent
             bwBackgroundWorker00 = new BackgroundWorker()
@@ -5687,13 +5686,13 @@ namespace GalaxyLotto
             #region Check Does Percent.Html exist ?
             string strCurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string strHtmlDirectory = System.IO.Path.Combine(strCurrentDirectory, "html");
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchPercent);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchPercent);
             string strFileName = string.Format("Percent_{0}{1}.html", new CGLDataSet(stuSearchPercent.LottoType).ID, dicCurrentData["lngDateSN"]);
             bool boolFileExist = new CGLFunc().FileExist(strHtmlDirectory, strFileName);
             #endregion
             if (stuSearchPercent.BoolRecalc || !boolFileExist)
             {
-                Dictionary<string, object> dicCompares = new CGLFuncSearch().SearchTablePercent(stuSearchPercent);
+                Dictionary<string, object> dicCompares = new CGLSearch().SearchTablePercent(stuSearchPercent);
                 dicArgument.Add("Compares", dicCompares);
             }
             e.Result = dicArgument;
@@ -5713,7 +5712,7 @@ namespace GalaxyLotto
             {
                 string strCurrentDirectory = System.IO.Directory.GetCurrentDirectory();
                 string strHtmlDirectory = System.IO.Path.Combine(strCurrentDirectory, "html");
-                Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearchPercent);
+                Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchPercent);
                 string strFileName = string.Format("Percent_{0}{1}.html", new CGLDataSet(stuSearchPercent.LottoType).ID, dicCurrentData["lngDateSN"]);
                 Process.Start(System.IO.Path.Combine(strHtmlDirectory, strFileName));
             }
@@ -5754,8 +5753,8 @@ namespace GalaxyLotto
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, object> dicTotal = (Dictionary<string, object>)dicCpmpares["dicTotal"];
             #region Set lstCurreny
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
-            List<int> lstCurrentData = new CGLFuncSearch().GetlstCurrentNums(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
+            List<int> lstCurrentData = new CGLSearch().GetlstCurrentNums(stuSearch00);
             #endregion Set lstCurreny
 
             #endregion
@@ -6008,7 +6007,7 @@ namespace GalaxyLotto
                 CanVerticallyScroll = true,
                 CanHorizontallyScroll = true
             };
-            spMain.Children.Add(new CGLFuncSearch().GetCurrentDataSp(stuSearch00));
+            spMain.Children.Add(new CGLSearch().GetCurrentDataSp(stuSearch00));
             Label lblTMA = new Label()
             {
                 Content = "Total Miss All :"
@@ -6224,10 +6223,10 @@ namespace GalaxyLotto
                     testdate = stuSearch00;
                     testdate.LngCurrentData = testdate.LngDataStart;
                     dicCurrentData = new Dictionary<string, string>();
-                    dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+                    dicCurrentData = new CGLSearch().GetCurrentData(testdate);
                     strTitle += dicCurrentData["lngDateSN"] + " => ";
                     testdate.LngCurrentData = testdate.LngDataEnd;
-                    dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+                    dicCurrentData = new CGLSearch().GetCurrentData(testdate);
                     strTitle += dicCurrentData["lngDateSN"];
 
                     if (Items.Key != "gen")
@@ -6333,11 +6332,11 @@ namespace GalaxyLotto
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             Dictionary<string, string> CIDToName = new CGLFunc().CNameID(1);
             Dictionary<string, object> dicTotal = (Dictionary<string, object>)dicCpmpares["dicTotal"];
-            Dictionary<string, int> dicCurrentDataNums = new CGLFuncSearch().GetCurrentDataNums(stuSearch00);
+            Dictionary<string, int> dicCurrentDataNums = new CGLSearch().GetCurrentDataNums(stuSearch00);
             #region Get File Name
             string strCurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string strHtmlDirectory = System.IO.Path.Combine(strCurrentDirectory, "html");
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             string strFileName = string.Format("Percent_{0}{1}.html", DataSet00.ID, dicCurrentData["lngDateSN"]);
             #endregion Get File Name
             #region Setting Title
@@ -6355,7 +6354,7 @@ namespace GalaxyLotto
             stringbuilder.AppendLine("</head>");
             stringbuilder.AppendLine("<body>");
             #region Set Current Data
-            stringbuilder.AppendLine(new CGLFuncSearch().GetCurrentDataHtml(stuSearch00));
+            stringbuilder.AppendLine(new CGLSearch().GetCurrentDataHtml(stuSearch00));
             #endregion Set Set Current Data
             stringbuilder.AppendLine("<details class='PercentAll' open>");
             stringbuilder.AppendLine(string.Format("<summary>{0}</summary>", "PercentAll"));
@@ -6516,10 +6515,10 @@ namespace GalaxyLotto
                     testdate = stuSearch00;
                     testdate.LngCurrentData = testdate.LngDataStart;
                     dicCurrentData = new Dictionary<string, string>();
-                    dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+                    dicCurrentData = new CGLSearch().GetCurrentData(testdate);
                     strTitle += dicCurrentData["lngDateSN"] + " => ";
                     testdate.LngCurrentData = testdate.LngDataEnd;
-                    dicCurrentData = new CGLFuncSearch().GetCurrentData(testdate);
+                    dicCurrentData = new CGLSearch().GetCurrentData(testdate);
                     strTitle += dicCurrentData["lngDateSN"];
                     if (Items.Key != "gen")
                     {
@@ -6714,7 +6713,7 @@ namespace GalaxyLotto
             stuSearchPercent01.IntDataOffset = 0;
             stuSearchPercent01.IntSearchLimit = 0;
             stuSearchPercent01.IntSearchOffset = 0;
-            stuSearchPercent01 = new CGLFuncSearch().GetMethodSN(stuSearchPercent01);
+            stuSearchPercent01 = new CGLSearch().GetMethodSN(stuSearchPercent01);
             #endregion 設定 stuSearchPercent
 
             #region Setting bwTablePercent
@@ -6747,12 +6746,12 @@ namespace GalaxyLotto
             #endregion
             #region Check tblPercent hsa Data
             Dictionary<string, object> dicCompares01 = new Dictionary<string, object>();
-            if (!new CGLFuncSearch().HasPercentAllData(stuSearchPercent01))
+            if (!new CGLSearch().HasPercentAllData(stuSearchPercent01))
             {
-                new CGLFuncSearch().SearchTablePercentAll(stuSearchPercent01);
+                new CGLSearch().SearchTablePercentAll(stuSearchPercent01);
             }
 
-            new CGLFuncSearch().GetTablePercentAll(stuSearchPercent01);
+            new CGLSearch().GetTablePercentAll(stuSearchPercent01);
 
             #endregion
             dicArgument.Add("Compares", dicCompares01);
@@ -6803,7 +6802,7 @@ namespace GalaxyLotto
             {
                 { "stuSearch", stuSearchLast }
             };
-            DataSet dsDataSet00 = new CGLFuncSearch().SearchLastNum(stuSearchLast);
+            DataSet dsDataSet00 = new CGLSearch().SearchLastNum(stuSearchLast);
             dicArgument.Add("Freq", dsDataSet00);
             e.Result = dicArgument;
         }
@@ -6842,7 +6841,7 @@ namespace GalaxyLotto
         {
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region Set lstCurreny
             List<int> lstCurrentData = new List<int>();
             for (int intCount = 1; intCount <= Dataset00.CountNumber; intCount++)
@@ -7389,7 +7388,7 @@ namespace GalaxyLotto
             {
                 { "stuSearch", stuSearchDoubleZero }
             };
-            DataSet dsDataSet00 = new CGLFuncSearch().SearchDoubleZero(stuSearchDoubleZero);
+            DataSet dsDataSet00 = new CGLSearch().SearchDoubleZero(stuSearchDoubleZero);
             dicArgument.Add("Freq", dsDataSet00);
             e.Result = dicArgument;
         }
@@ -7417,7 +7416,7 @@ namespace GalaxyLotto
             #region Seting
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region lstCurrentNum
             List<int> lstCurrentNum = new List<int>();
             for (int intCount = 1; intCount <= Dataset00.CountNumber; intCount++)
@@ -7685,7 +7684,7 @@ namespace GalaxyLotto
             {
                 { "stuSearch", stuSearchMatch }
             };
-            DataSet dsDataSet00 = new CGLFuncSearch().SearchMatch(stuSearchMatch);
+            DataSet dsDataSet00 = new CGLSearch().SearchMatch(stuSearchMatch);
             dicArgument.Add("Freq", dsDataSet00);
             e.Result = dicArgument;
         }
@@ -7713,7 +7712,7 @@ namespace GalaxyLotto
         {
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
-            Dictionary<string, string> dicCurrentData = new CGLFuncSearch().GetCurrentData(stuSearch00);
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region Set lstCurreny
             List<int> lstCurrentData = new List<int>();
             for (int intCount = 1; intCount <= Dataset00.CountNumber; intCount++)
@@ -7974,8 +7973,8 @@ namespace GalaxyLotto
             #region 設定 stuSearchsmart
             StuGLSearch stuSearchsmart = ButtonClick(stuRibbonSearchOption);
             stuSearchsmart.IntMatchMin = 0;
-            //stuSearchsmart = new CGLFuncSearch().InitSearch(stuSearchsmart);
-            stuSearchsmart = new CGLFuncSearch().GetMethodSN(stuSearchsmart);
+            //stuSearchsmart = new CGLSearch().InitSearch(stuSearchsmart);
+            stuSearchsmart = new CGLSearch().GetMethodSN(stuSearchsmart);
             #endregion 設定 stuSearchsmart
 
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchsmart.LottoType);
