@@ -76,42 +76,43 @@ namespace GalaxyLotto
         private StuGLSearch SetCompareString(StuGLSearch stuSearch00)
         {
             StuGLSearch stuReturn = stuSearch00;
-            stuReturn.StrCompares = "";
+            List<string> lstCompare = new List<string>();
+
+            //stuReturn.StrCompares = "";
+
             #region FieldMode
             if (stuReturn.BoolFieldMode)
             {
                 if ((string)cmbCompare01.SelectedValue != "none")
                 {
-                    stuReturn.StrCompares += cmbCompare01.SelectedValue.ToString() + "#";
+                    lstCompare.Add(cmbCompare01.SelectedValue.ToString());
                 }
                 if ((string)cmbCompare02.SelectedValue != "none")
                 {
-                    stuReturn.StrCompares += cmbCompare02.SelectedValue.ToString() + "#";
+                    lstCompare.Add(cmbCompare02.SelectedValue.ToString());
                 }
                 if ((string)cmbCompare03.SelectedValue != "none")
                 {
-                    stuReturn.StrCompares += cmbCompare03.SelectedValue.ToString() + "#";
+                    lstCompare.Add(cmbCompare03.SelectedValue.ToString());
                 }
                 if ((string)cmbCompare04.SelectedValue != "none")
                 {
-                    stuReturn.StrCompares += cmbCompare04.SelectedValue.ToString() + "#";
+                    lstCompare.Add(cmbCompare04.SelectedValue.ToString());
                 }
                 if ((string)cmbCompare05.SelectedValue != "none")
                 {
-                    stuReturn.StrCompares += cmbCompare05.SelectedValue.ToString() + "#";
+                    lstCompare.Add(cmbCompare05.SelectedValue.ToString());
                 }
             }
             #endregion FieldMode
 
-            if (stuReturn.StrCompares != "" && stuReturn.StrCompares != "gen")
+            if (lstCompare.Count > 0)
             {
-                stuReturn.StrCompares = stuReturn.StrCompares.TrimEnd('#');
-                List<string> sortCompare = stuReturn.StrCompares.Split('#').ToList<string>();
-                sortCompare.Sort();
-                stuReturn.StrCompares = string.Join("#", sortCompare);
-                stuReturn = new CGLFuncSearch().SetComparesDetail(stuReturn);
+                lstCompare.Sort();
+                stuReturn.StrCompares = string.Join("#", lstCompare.Distinct());
+                //stuReturn = new CGLFuncSearch().SetComparesDetail(stuReturn);
             }
-            if (stuReturn.StrCompares == "" || stuReturn.StrCompares == "gen")
+            else
             {
                 stuReturn.StrCompares = "gen";
                 stuReturn.StrComparesDetail = "none";
@@ -511,8 +512,6 @@ namespace GalaxyLotto
         private void CmbNextNums_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             stuRibbonSearchOption.IntNextNums = int.Parse(cmbNextNums.SelectedValue.ToString());
-            SetCompareString(stuRibbonSearchOption);
-            stuRibbonSearchOption = new CGLFuncSearch().SetNextNums(stuRibbonSearchOption);
         }
         private void CmbNextStep_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -632,7 +631,7 @@ namespace GalaxyLotto
         private StuGLSearch ButtonClick(StuGLSearch stuSearch00)
         {
             stuSearch00 = SetCompareString(stuSearch00);
-            stuSearch00 = new CGLFuncSearch().InitSearch(stuSearch00);
+            //stuSearch00 = new CGLFuncSearch().InitSearch(stuSearch00);
             return stuSearch00;
         }
 
@@ -1089,11 +1088,10 @@ namespace GalaxyLotto
 
             if (IsSearchAllGo && !bwSearchFreqAll01.IsBusy)
             {
-                StuGLSearch stuSearchAll01 = stuRibbonSearchOption;
+                StuGLSearch stuSearchAll01 = ButtonClick(stuRibbonSearchOption);
                 #region 設定 stuSearchAll01
-                stuSearchAll01 = SetCompareString(stuSearchAll01);
-                stuSearchAll01 = new CGLFuncSearch().InitSearch(stuSearchAll01);
-                stuSearchAll01 = new CGLFuncSearch().GetMethodSN(stuSearchAll01);
+                //stuSearchAll01 = new CGLFuncSearch().InitSearch(stuSearchAll01);
+                //stuSearchAll01 = new CGLFuncSearch().GetMethodSN(stuSearchAll01);
                 btnFreqAll.Content = "取消尋找";
                 pbStatusProcess.Value = 0;
                 pbStatusProcess.Visibility = Visibility.Visible;
@@ -1237,12 +1235,12 @@ namespace GalaxyLotto
                                 bwMyWork.ReportProgress(1, dicReport);
                                 //Console.WriteLine("Freq : {0}/{1}", intTotalSN, intQueryEnd);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
 
                                 if (!new CGLFuncFreq().HasFreqData(stuSearchTemp))
                                 {
                                     //Console.WriteLine("SearchFreq : {0}", intTotalSN);
-                                    foreach (DataRow drRow in new CGLFuncFreq().SearchFreqTb(stuSearchTemp).Rows)
+                                    foreach (DataRow drRow in new CGLFuncFreq().GetFreqTb(stuSearchTemp).Rows)
                                     {
                                         DataRow drRow00 = dtFreq.NewRow();
                                         for (int i = 1; i < dtFreq.Columns.Count; i++)
@@ -1323,7 +1321,7 @@ namespace GalaxyLotto
                             {
                                 bwMyWork.ReportProgress(1, dicReport);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
 
                                 #region 處理所有非零的頻率
                                 dicSortFreq.Clear();
@@ -1459,7 +1457,7 @@ namespace GalaxyLotto
                                 bwMyWork.ReportProgress(1, dicReport);
                                 //Console.WriteLine("HitAll : {0}/{1}", intTotalSN, intQueryEnd);
                                 stuSearchTemp.LngCurrentData = (long)intTotalSN;
-                                stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
+                                //stuSearchTemp = new CGLFuncSearch().InitSearch(stuSearchTemp);
 
                                 for (int intInvest = DataSet00.CountNumber; intInvest <= 10; intInvest++)
                                 {
@@ -1523,10 +1521,9 @@ namespace GalaxyLotto
         private void BtnHit_Click(object sender, RoutedEventArgs e)
         {
             #region 設定 stuSearchHit
-            StuGLSearch stuSearchHit = stuRibbonSearchOption;
-            stuSearchHit = SetCompareString(stuSearchHit);
-            stuSearchHit = new CGLFuncSearch().InitSearch(stuSearchHit);
-            stuSearchHit = new CGLFuncSearch().GetMethodSN(stuSearchHit);
+            StuGLSearch stuSearchHit = ButtonClick(stuRibbonSearchOption);
+            //stuSearchHit = new CGLFuncSearch().InitSearch(stuSearchHit);
+            //stuSearchHit = new CGLFuncSearch().GetMethodSN(stuSearchHit);
             #endregion 設定 stuSearchHit
             bwHit = new BackgroundWorker()
             {
@@ -1613,7 +1610,7 @@ namespace GalaxyLotto
             string[] strPreviousNoneZero;
             StuGLSearch stuPreviosSearch = stuSearch00;
             stuPreviosSearch.LngCurrentData = stuSearch00.LngCurrentData - 1;
-            stuPreviosSearch = new CGLFuncSearch().InitSearch(stuPreviosSearch);
+            //stuPreviosSearch = new CGLFuncSearch().InitSearch(stuPreviosSearch);
 
             dicPreviousSortResult = new CGLFuncFreq().GetSortedFreqdic(stuPreviosSearch);
             strPreviousNoneZero = new CGLFunc().GetNonZeroArray(dicPreviousSortResult);
@@ -1900,9 +1897,8 @@ namespace GalaxyLotto
             //taskBarItemInfo1.ProgressState = System.Windows.Shell.TaskbarItemProgressState.Normal;
             //taskBarItemInfo1.ProgressValue = 0;
 
-            StuGLSearch stuSearchHitAll = stuRibbonSearchOption;
-            stuSearchHitAll = SetCompareString(stuSearchHitAll);
-            stuSearchHitAll = new CGLFuncSearch().InitSearch(stuSearchHitAll);
+            StuGLSearch stuSearchHitAll = ButtonClick(stuRibbonSearchOption);
+            //stuSearchHitAll = new CGLFuncSearch().InitSearch(stuSearchHitAll);
             //stuSearchHitAll = stuSearchHitAll.GetMethodSN(stuSearchHitAll);
 
 
@@ -3939,7 +3935,7 @@ namespace GalaxyLotto
             #region 檢查 tblMissAll 是否有資料
             if (!new CGLFuncMiss().HasMissAllData(stuSearchActive))
             {
-                new CGLFuncMiss().SearchMissAll(stuSearchActive);
+                new CGLFuncMiss().GetMissAlldic(stuSearchActive);
             }
             #endregion 檢查是否有資料
 
@@ -5098,7 +5094,7 @@ namespace GalaxyLotto
             Dictionary<string, object> dicMissAll = new Dictionary<string, object>
             {
                 { "stuSearch", stuSearchMissAll },
-                { "dicMissAll", new CGLFuncMiss().GetMissAlldic(stuSearchMissAll) }
+                { "dicMissAll", new CGLFuncMiss().GetMissAlldic(stuSearchMissAll,3,"DESC") }
             };
             #endregion
             e.Result = dicMissAll;
@@ -7976,10 +7972,9 @@ namespace GalaxyLotto
             Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
 
             #region 設定 stuSearchsmart
-            StuGLSearch stuSearchsmart = stuRibbonSearchOption;
-            stuSearchsmart = SetCompareString(stuSearchsmart);
+            StuGLSearch stuSearchsmart = ButtonClick(stuRibbonSearchOption);
             stuSearchsmart.IntMatchMin = 0;
-            stuSearchsmart = new CGLFuncSearch().InitSearch(stuSearchsmart);
+            //stuSearchsmart = new CGLFuncSearch().InitSearch(stuSearchsmart);
             stuSearchsmart = new CGLFuncSearch().GetMethodSN(stuSearchsmart);
             #endregion 設定 stuSearchsmart
 
