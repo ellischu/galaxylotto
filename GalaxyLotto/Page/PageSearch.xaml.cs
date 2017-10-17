@@ -35,7 +35,6 @@ namespace GalaxyLotto
         #region 公用參數
         private CGLDataSet gDataSetGlotto = new CGLDataSet(TableType.LottoBig);
         private StuGLSearch stuRibbonSearchOption;
-        private StuWindowShow stuRibbonWinShow = new StuWindowShow();
 
         //Dictionary<string, string> dicCurrentData;
         //List<int> lstCurrentData;
@@ -165,10 +164,8 @@ namespace GalaxyLotto
             stuRibbonSearchOption.StrNextNumSpe = "none";
             stuRibbonSearchOption.IntNextNums = int.Parse(cmbNextNums.SelectedValue.ToString());
             stuRibbonSearchOption.IntNextStep = int.Parse(cmbNextStep.SelectedValue.ToString());
-
-            stuRibbonWinShow.BoolShowProcess = (bool)chkShowProcess.IsChecked;
-            stuRibbonWinShow.BoolShowGraphic = (bool)chkshowGraphic.IsChecked;
-            stuRibbonSearchOption.StuWinshow = stuRibbonWinShow;
+            if (chkShowProcess.IsChecked == true) { stuRibbonSearchOption.showProcess = ShowProcess.Visible; } else { stuRibbonSearchOption.showProcess = ShowProcess.Hide; }
+            if (chkshowGraphic.IsChecked == true) { stuRibbonSearchOption.showGraphic = ShowGraphic.Visible; } else { stuRibbonSearchOption.showGraphic = ShowGraphic.Hide; }
             #endregion Set stuRibbonSearchOption
         }
         /// <summary>
@@ -388,18 +385,15 @@ namespace GalaxyLotto
         }
         private void ChkShowProcess_Unchecked(object sender, RoutedEventArgs e)
         {
-            stuRibbonWinShow.BoolShowProcess = false;
-            stuRibbonSearchOption.StuWinshow = stuRibbonWinShow;
+            stuRibbonSearchOption.showProcess = ShowProcess.Hide;
         }
         private void ChkshowGraphic_Checked(object sender, RoutedEventArgs e)
         {
-            stuRibbonWinShow.BoolShowGraphic = true;
-            stuRibbonSearchOption.StuWinshow = stuRibbonWinShow;
+            stuRibbonSearchOption.showGraphic = ShowGraphic.Visible;
         }
         private void ChkshowGraphic_Unchecked(object sender, RoutedEventArgs e)
         {
-            stuRibbonWinShow.BoolShowGraphic = false;
-            stuRibbonSearchOption.StuWinshow = stuRibbonWinShow;
+            stuRibbonSearchOption.showGraphic = ShowGraphic.Hide;
         }
         private void CmbCompareType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -407,8 +401,7 @@ namespace GalaxyLotto
         }
         private void ChkShowProcess_Checked(object sender, RoutedEventArgs e)
         {
-            stuRibbonWinShow.BoolShowProcess = true;
-            stuRibbonSearchOption.StuWinshow = stuRibbonWinShow;
+            stuRibbonSearchOption.showProcess = ShowProcess.Visible;
         }
         private void TxtDataLimit_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -908,7 +901,7 @@ namespace GalaxyLotto
                 stackPanel.Children.Add(expFreqResult);
                 #endregion
                 #region Set Expander Graphic
-                if (gstuGLSearch.StuWinshow.BoolShowGraphic)
+                if (gstuGLSearch.showGraphic == ShowGraphic.Visible)
                 {
                     expGraphicResult = new Expander()
                     {
@@ -944,7 +937,7 @@ namespace GalaxyLotto
                 }
                 #endregion
                 #region Set Expander Process
-                if (gstuGLSearch.StuWinshow.BoolShowProcess)
+                if (gstuGLSearch.showProcess == ShowProcess.Visible)
                 {
                     expProcessResult = new Expander()
                     {
@@ -5692,7 +5685,7 @@ namespace GalaxyLotto
             #endregion
             if (stuSearchPercent.BoolRecalc || !boolFileExist)
             {
-                Dictionary<string, object> dicCompares = new CGLSearch().SearchTablePercent(stuSearchPercent);
+                Dictionary<string, object> dicCompares = new CGLSearch().GetTablePercent(stuSearchPercent);
                 dicArgument.Add("Compares", dicCompares);
             }
             e.Result = dicArgument;
