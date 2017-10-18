@@ -20,9 +20,9 @@ using System.Windows.Markup;
 using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using static GalaxyLotto.ClassLibrary.CGLSearch;
-using static GalaxyLotto.ClassLibrary.CGLData;
 using static GalaxyLotto.ClassLibrary.CGLFreq;
 using static GalaxyLotto.ClassLibrary.CGLMethod;
+using static GalaxyLotto.ClassLibrary.CGLData;
 
 namespace GalaxyLotto
 {
@@ -2910,7 +2910,7 @@ namespace GalaxyLotto
             #region Check tblMissAll ,Does it have Data?
             if (!new CGLSum().HasSumData(stuSearchSum))
             {
-                new CGLSum().GetSumdic(stuSearchSum);
+                new CGLSum().GetSumDic(stuSearchSum);
             }
             #endregion 檢查是否有資料
 
