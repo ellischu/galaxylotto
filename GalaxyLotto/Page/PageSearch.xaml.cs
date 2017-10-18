@@ -21,9 +21,8 @@ using System.Diagnostics;
 using System.Windows.Controls.Primitives;
 using static GalaxyLotto.ClassLibrary.CGLSearch;
 using static GalaxyLotto.ClassLibrary.CGLData;
-using static GalaxyLotto.ClassLibrary.CGLOption;
 using static GalaxyLotto.ClassLibrary.CGLFreq;
-using static GalaxyLotto.ClassLibrary.GLStructure;
+using static GalaxyLotto.ClassLibrary.CGLMethod;
 
 namespace GalaxyLotto
 {
@@ -1232,7 +1231,7 @@ namespace GalaxyLotto
                                 if (!new CGLFreq().HasFreqData(stuSearchTemp))
                                 {
                                     //Console.WriteLine("SearchFreq : {0}", intTotalSN);
-                                    foreach (DataRow drRow in new CGLFreq().GetFreqTb(stuSearchTemp).Rows)
+                                    foreach (DataRow drRow in new CGLFreq().GetFreqdt(stuSearchTemp).Rows)
                                     {
                                         DataRow drRow00 = dtFreq.NewRow();
                                         for (int i = 1; i < dtFreq.Columns.Count; i++)
@@ -2909,9 +2908,9 @@ namespace GalaxyLotto
             #endregion Setup
 
             #region Check tblMissAll ,Does it have Data?
-            if (!new CGLSearch().HasSumData(stuSearchSum))
+            if (!new CGLSum().HasSumData(stuSearchSum))
             {
-                new CGLSearch().SearchSum(stuSearchSum);
+                new CGLSum().GetSumdic(stuSearchSum);
             }
             #endregion 檢查是否有資料
 
