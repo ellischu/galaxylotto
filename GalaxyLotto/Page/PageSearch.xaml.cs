@@ -718,9 +718,7 @@ namespace GalaxyLotto
         /// <param name="colResultFreq"></param>
         private void ShowResult(StuGLSearch gstuGLSearch, Dictionary<string, object> colResultFreq)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             Dictionary<string, int> dicCurrentNums = new CGLSearch().GetCurrentDataNums(gstuGLSearch);
-            string strTemp;
             #region Set ProcessBar
             double value = 0;
             Boolean blProcWin = false;
@@ -971,13 +969,12 @@ namespace GalaxyLotto
                     {
                         foreach (DataColumn cFreqProcess in dtProcessResult.Columns)
                         {
-                            dgtColumnFreqProcess = new DataGridTextColumn();
-                            strTemp = cFreqProcess.Caption;
-                            if (CFieldIDToName.ContainsKey(strTemp))
-                                strTemp = CFieldIDToName[strTemp];
-                            dgtColumnFreqProcess.Header = strTemp;
-                            dgtColumnFreqProcess.Binding = new System.Windows.Data.Binding(cFreqProcess.ColumnName);
-                            dgtColumnFreqProcess.IsReadOnly = true;
+                            dgtColumnFreqProcess = new DataGridTextColumn
+                            {
+                                Header = new CGLFunc().ConvertFieldNameID(cFreqProcess.Caption, 1),
+                                Binding = new Binding(cFreqProcess.ColumnName),
+                                IsReadOnly = true
+                            };
                             #region Set Trigrer
                             if (cFreqProcess.ColumnName.Substring(0, 4) == "lngL")
                             {
@@ -1644,8 +1641,6 @@ namespace GalaxyLotto
         }
         private void ShowHitResult(StuGLSearch stuSearchHit, Dictionary<string, object> result)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
-            string strTemp;
             #region Set Current and Previous HitResult
             CGLDataSet DataSet00 = new CGLDataSet(stuSearchHit.LottoType);
             Dictionary<string, object> dicCurrentHitResult = (Dictionary<string, object>)result["Current"];
@@ -1690,10 +1685,7 @@ namespace GalaxyLotto
                     lblTitle.Content += " 相同 {";
                     foreach (string strCompareOption in strCompare)
                     {
-                        strTemp = strCompareOption;
-                        if (CFieldIDToName.ContainsKey(strTemp))
-                            strTemp = CFieldIDToName[strTemp];
-                        lblTitle.Content += " " + strTemp + " ,";
+                        lblTitle.Content += " " + new CGLFunc().ConvertFieldNameID(strCompareOption, 1) + " ,";
                     }
                     lblTitle.Content = lblTitle.Content.ToString().TrimEnd(',') + " }";
                 }
@@ -1770,11 +1762,10 @@ namespace GalaxyLotto
                     {
                         foreach (var KeyPair in dicItems)
                         {
-                            dgtColumn = new DataGridTextColumn();
-                            strTemp = KeyPair.Key;
-                            if (CFieldIDToName.ContainsKey(strTemp))
-                                strTemp = CFieldIDToName[strTemp];
-                            dgtColumn.Header = strTemp;
+                            dgtColumn = new DataGridTextColumn
+                            {
+                                Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1)
+                            };
                             System.Windows.Data.Binding dgtBinding = new System.Windows.Data.Binding(KeyPair.Key);
                             dgtColumn.Binding = dgtBinding;
                             dgtColumn.IsReadOnly = true;
@@ -1851,11 +1842,10 @@ namespace GalaxyLotto
                     {
                         foreach (var KeyPair in dicItems)
                         {
-                            dgtColumn = new DataGridTextColumn();
-                            strTemp = KeyPair.Key;
-                            if (CFieldIDToName.ContainsKey(strTemp))
-                                strTemp = CFieldIDToName[strTemp];
-                            dgtColumn.Header = strTemp;
+                            dgtColumn = new DataGridTextColumn
+                            {
+                                Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1)
+                            };
                             System.Windows.Data.Binding dgtBinding = new System.Windows.Data.Binding(KeyPair.Key);
                             dgtColumn.Binding = dgtBinding;
                             dgtColumn.IsReadOnly = true;
@@ -2011,7 +2001,6 @@ namespace GalaxyLotto
         }
         private void SearchOddEven(StuGLSearch stuSearchOddEven)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             //CGLDataSet Dataset00 = new CGLDataSet(stuSearchOddEven.LottoType);
 
 
@@ -2046,17 +2035,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                 {
-                    dgtColumnOddEven = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnOddEven = new DataGridTextColumn
                     {
-                        dgtColumnOddEven.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnOddEven.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnOddEven.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnOddEven.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgOddEven.Columns.Add(dgtColumnOddEven);
                 }
             }
@@ -2098,17 +2082,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataNext.Columns)
                 {
-                    dgtColumnOddEveNext = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnOddEveNext = new DataGridTextColumn
                     {
-                        dgtColumnOddEveNext.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnOddEveNext.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnOddEveNext.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnOddEveNext.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgOddEvenNext.Columns.Add(dgtColumnOddEveNext);
                 }
             }
@@ -2223,7 +2202,6 @@ namespace GalaxyLotto
 
         private void BtnTableHighLow_Click(object sender, RoutedEventArgs e) //大數-小數表
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
 
             #region 設定 stuSearchHighLow
             stuRibbonSearchOption = ButtonClick(stuRibbonSearchOption);
@@ -2463,20 +2441,13 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                 {
-                    dgtColumnHighLow = new DataGridTextColumn();
-                    //dgtColumnHighLow.MaxWidth = 50;
-                    string strHeader;
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnHighLow = new DataGridTextColumn
                     {
-                        strHeader = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        strHeader = dcdgColumn.Caption;
-                    }
-                    dgtColumnHighLow.Header = strHeader;
-                    dgtColumnHighLow.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnHighLow.IsReadOnly = true;
+                        //MaxWidth = 50,
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     string[] cName = { "intHigh", "intLow", "sglPHLA05", "sglPHLB05", "sglPHLA10", "sglPHLB10", "sglPHLA25", "sglPHLB25", "sglPHLA50", "sglPHLB50", "sglPHLA100", "sglPHLB100", "sglTPHLB" };
                     if (cName.Contains(dcdgColumn.ColumnName))
                     {
@@ -2563,24 +2534,16 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataNext.Columns)
                 {
-                    dgtColumnHighLowext = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnHighLowext = new DataGridTextColumn
                     {
-                        dgtColumnHighLowext.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnHighLowext.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnHighLowext.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnHighLowext.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     string[] cName = { "intHigh", "intLow", "sglPHLA05", "sglPHLB05", "sglPHLA10", "sglPHLB10", "sglPHLA25", "sglPHLB25", "sglPHLA50", "sglPHLB50", "sglPHLA100", "sglPHLB100", "sglTPHLB" };
                     if (cName.Contains(dcdgColumn.ColumnName))
                     {
-                        Style Style00 = new Style()
-                        {
-                            TargetType = typeof(DataGridCell)
-                        };
+                        Style Style00 = new Style() { TargetType = typeof(DataGridCell) };
                         Setter setter00 = new Setter()
                         {
                             Property = BackgroundProperty,
@@ -2903,7 +2866,6 @@ namespace GalaxyLotto
             {
                 { "stuSearch", stuSearchSum }
             };
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearchSum.LottoType);
             #endregion Setup
 
@@ -3153,7 +3115,6 @@ namespace GalaxyLotto
             DataTable dtDataTable = dsSum.Tables["TableSum"];
             DataTable dtDataNext = dsSum.Tables["DataNext"];
             Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             #region Show Window
 
             #region Set DataGrid dgCurrentData
@@ -3180,14 +3141,12 @@ namespace GalaxyLotto
             {
                 foreach (var KeyPair in dicCurrentData)
                 {
-                    dgtColumn = new DataGridTextColumn();
-                    string strTemp = KeyPair.Key;
-                    if (CFieldIDToName.ContainsKey(strTemp))
-                        strTemp = CFieldIDToName[strTemp];
-                    dgtColumn.Header = strTemp;
-                    Binding dgtBinding = new Binding(KeyPair.Key);
-                    dgtColumn.Binding = dgtBinding;
-                    dgtColumn.IsReadOnly = true;
+                    dgtColumn = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1),
+                        Binding = new Binding(KeyPair.Key),
+                        IsReadOnly = true
+                    };
                     dgCurrentData.Columns.Add(dgtColumn);
                 }
             }
@@ -3214,17 +3173,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                 {
-                    dgtColumnSum = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnSum = new DataGridTextColumn
                     {
-                        dgtColumnSum.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnSum.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnSum.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnSum.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     string[] cName = { "intSum", "sglAvg", "sglAvg05", "sglAvg10", "sglAvg25", "sglAvg50", "sglAvg100" };
                     if (cName.Contains(dcdgColumn.ColumnName))
                     {
@@ -3310,17 +3264,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataNext.Columns)
                 {
-                    dgtColumnSumext = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnSumext = new DataGridTextColumn
                     {
-                        dgtColumnSumext.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnSumext.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnSumext.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnSumext.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     string[] cName = { "sglAvg", "sglAvg05", "sglAvg10", "sglAvg25", "sglAvg50", "sglAvg100" };
                     if (cName.Contains(dcdgColumn.ColumnName))
                     {
@@ -3760,7 +3709,6 @@ namespace GalaxyLotto
             DataTable dtDataInterval10 = dsIntervals.Tables["Interval10"];
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             #region Set lstCurreny
             List<int> lstCurrentData = new List<int>();
             for (int intCount = 1; intCount <= Dataset00.CountNumber; intCount++)
@@ -3794,17 +3742,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataInterval.Columns)
                 {
-                    dgtColumnInterval = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnInterval = new DataGridTextColumn
                     {
-                        dgtColumnInterval.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnInterval.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnInterval.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnInterval.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgInterval.Columns.Add(dgtColumnInterval);
                 }
             }
@@ -3907,7 +3850,6 @@ namespace GalaxyLotto
         /// <param name="e"></param>
         private void BtnTableActive_Click(object sender, RoutedEventArgs e) //冷熱門數字表
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
 
             #region 設定 stuSearchActive
             stuRibbonSearchOption = ButtonClick(stuRibbonSearchOption);
@@ -4009,17 +3951,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                 {
-                    dgtColumnActive = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnActive = new DataGridTextColumn
                     {
-                        dgtColumnActive.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnActive.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnActive.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnActive.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgActive.Columns.Add(dgtColumnActive);
                 }
             }
@@ -4309,7 +4246,6 @@ namespace GalaxyLotto
         }
         private void BwsDataN_DoWork(object sender, DoWorkEventArgs e)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             #region 設定
             StuGLSearch stuSearchDataN = (StuGLSearch)e.Argument;
             BackgroundWorker bwMyWork = (BackgroundWorker)sender;
@@ -4320,9 +4256,9 @@ namespace GalaxyLotto
             #endregion
             dicArgument.Add("stuSearch", stuSearchDataN);
             #region 檢查 DataN 是否有資料 
-            if (!new CGLSearch().HasDataN(stuSearchDataN))
+            if (!new CGLDataN().HasDataNData(stuSearchDataN))
             {
-                new CGLSearch().SearchDataN(stuSearchDataN);
+                new CGLDataN().GetDataNdic(stuSearchDataN);
             }
             #endregion 檢查是否有資料
 
@@ -4502,7 +4438,6 @@ namespace GalaxyLotto
 
         private void ShowDataN(StuGLSearch stuSearch00, DataSet dsDataSet)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             Dictionary<string, string> dicCurrentData = new Dictionary<string, string>();
             dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             DataGridTextColumn dgtColumn;
@@ -4554,14 +4489,12 @@ namespace GalaxyLotto
             {
                 foreach (var KeyPair in dicCurrentData)
                 {
-                    dgtColumn = new DataGridTextColumn();
-                    string strTemp = KeyPair.Key;
-                    if (CFieldIDToName.ContainsKey(strTemp))
-                        strTemp = CFieldIDToName[strTemp];
-                    dgtColumn.Header = strTemp;
-                    Binding dgtBinding = new Binding(KeyPair.Key);
-                    dgtColumn.Binding = dgtBinding;
-                    dgtColumn.IsReadOnly = true;
+                    dgtColumn = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1),
+                        Binding = new Binding(KeyPair.Key),
+                        IsReadOnly = true
+                    };
                     dgCurrentData.Columns.Add(dgtColumn);
                 }
             }
@@ -4619,17 +4552,12 @@ namespace GalaxyLotto
 
                     foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                     {
-                        dgtColumn = new DataGridTextColumn();
-                        if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                        dgtColumn = new DataGridTextColumn
                         {
-                            dgtColumn.Header = CFieldIDToName[dcdgColumn.Caption];
-                        }
-                        else
-                        {
-                            dgtColumn.Header = dcdgColumn.Caption;
-                        }
-                        dgtColumn.Binding = new Binding(dcdgColumn.ColumnName);
-                        dgtColumn.IsReadOnly = true;
+                            Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                            Binding = new Binding(dcdgColumn.ColumnName),
+                            IsReadOnly = true
+                        };
                         #region set hit numbers
                         if (dcdgColumn.ColumnName.Substring(0, 4) == "lngN")
                         {
@@ -5111,7 +5039,6 @@ namespace GalaxyLotto
         {
             StuGLSearch stuSearch00 = (StuGLSearch)dicInput["stuSearch"];
             Dictionary<string, object> dicMissAll = (Dictionary<string, object>)dicInput["dicMissAll"];
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             List<int> lstCurrentNums = new CGLSearch().GetlstCurrentNums(stuSearch00);
             #region spMain
             StackPanel spMain = new StackPanel()
@@ -5177,17 +5104,12 @@ namespace GalaxyLotto
                     DataGridTextColumn dgtColumnMissAll;
                     foreach (DataColumn dcdgColumn in dtDataTable.Columns)
                     {
-                        dgtColumnMissAll = new DataGridTextColumn();
-                        if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                        dgtColumnMissAll = new DataGridTextColumn
                         {
-                            dgtColumnMissAll.Header = CFieldIDToName[dcdgColumn.Caption];
-                        }
-                        else
-                        {
-                            dgtColumnMissAll.Header = dcdgColumn.Caption;
-                        }
-                        dgtColumnMissAll.Binding = new Binding(dcdgColumn.ColumnName);
-                        dgtColumnMissAll.IsReadOnly = true;
+                            Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                            Binding = new Binding(dcdgColumn.ColumnName),
+                            IsReadOnly = true
+                        };
 
                         #region change the lngL Background
                         if (dcdgColumn.ColumnName.Substring(0, 4) == "lngL")
@@ -5741,7 +5663,6 @@ namespace GalaxyLotto
         private void ShowTablePercent(StuGLSearch stuSearch00, Dictionary<string, object> dicCpmpares)
         {
             #region 設定
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, object> dicTotal = (Dictionary<string, object>)dicCpmpares["dicTotal"];
             #region Set lstCurreny
@@ -6064,17 +5985,12 @@ namespace GalaxyLotto
                             {
                                 foreach (DataColumn dcColumn in dtFreq.Columns)
                                 {
-                                    dgtColumnActive = new DataGridTextColumn();
-                                    if (CFieldIDToName.ContainsKey(dcColumn.Caption))
+                                    dgtColumnActive = new DataGridTextColumn
                                     {
-                                        dgtColumnActive.Header = CFieldIDToName[dcColumn.Caption].Substring(1);
-                                    }
-                                    else
-                                    {
-                                        dgtColumnActive.Header = dcColumn.Caption;
-                                    }
-                                    dgtColumnActive.Binding = new Binding(dcColumn.ColumnName);
-                                    dgtColumnActive.IsReadOnly = true;
+                                        Header = new CGLFunc().ConvertFieldNameID(dcColumn.Caption, 1),
+                                        Binding = new Binding(dcColumn.ColumnName),
+                                        IsReadOnly = true
+                                    };
                                     if (lstCurrentData.Contains(int.Parse(dcColumn.ColumnName.Substring(4))))
                                     {
                                         Style styStyle00 = new Style();
@@ -6148,17 +6064,12 @@ namespace GalaxyLotto
                             int intColumnCount = 0;
                             foreach (DataColumn dcdgColumn in dtHot.Columns)
                             {
-                                dgtColumnActive = new DataGridTextColumn();
-                                if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                                dgtColumnActive = new DataGridTextColumn
                                 {
-                                    dgtColumnActive.Header = CFieldIDToName[dcdgColumn.Caption];
-                                }
-                                else
-                                {
-                                    dgtColumnActive.Header = dcdgColumn.Caption;
-                                }
-                                dgtColumnActive.Binding = new Binding(dcdgColumn.ColumnName);
-                                dgtColumnActive.IsReadOnly = true;
+                                    Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                                    Binding = new Binding(dcdgColumn.ColumnName),
+                                    IsReadOnly = true
+                                };
                                 if (intColumnCount == 0)
                                 {
                                     #region Set Trigger
@@ -6229,9 +6140,7 @@ namespace GalaxyLotto
                             strTitle += " 相同 {";
                             foreach (string strCompareOption in strCompare)
                             {
-                                string strTemp = strCompareOption;
-                                if (CFieldIDToName.ContainsKey(strTemp)) strTemp = CFieldIDToName[strTemp];
-                                strTitle += " " + strTemp + " ,";
+                                strTitle += " " + new CGLFunc().ConvertFieldNameID(strCompareOption, 1) + " ,";
                             }
                             strTitle = strTitle.TrimEnd(',') + " }";
                         }
@@ -6321,8 +6230,6 @@ namespace GalaxyLotto
         {
             #region Setting
             CGLDataSet DataSet00 = new CGLDataSet(stuSearch00.LottoType);
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
-            Dictionary<string, string> CIDToName = new CGLFunc().CNameID(1);
             Dictionary<string, object> dicTotal = (Dictionary<string, object>)dicCpmpares["dicTotal"];
             Dictionary<string, int> dicCurrentDataNums = new CGLSearch().GetCurrentDataNums(stuSearch00);
             #region Get File Name
@@ -6520,9 +6427,7 @@ namespace GalaxyLotto
                             strTitle += " 相同 {";
                             foreach (string strCompareOption in strCompare)
                             {
-                                string strTemp = strCompareOption;
-                                if (CFieldIDToName.ContainsKey(strTemp)) strTemp = CFieldIDToName[strTemp];
-                                strTitle += " " + strTemp + " ,";
+                                strTitle += " " + new CGLFunc().ConvertFieldNameID(strCompareOption, 1) + " ,";
                             }
                             strTitle = strTitle.TrimEnd(',') + " }";
                         }
@@ -6593,14 +6498,7 @@ namespace GalaxyLotto
                         foreach (DataColumn dcdgColumn in dtShow.Columns)
                         {
                             stringbuilder.AppendLine("<th>");
-                            if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
-                            {
-                                stringbuilder.AppendLine(string.Format("{0}", CFieldIDToName[dcdgColumn.Caption]));
-                            }
-                            else
-                            {
-                                stringbuilder.AppendLine(string.Format("{0}", dcdgColumn.Caption));
-                            }
+                            stringbuilder.AppendLine(string.Format("{0}", new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1)));
                             stringbuilder.AppendLine("</th>");
                         }
                         stringbuilder.AppendLine("</tr>");
@@ -6831,7 +6729,6 @@ namespace GalaxyLotto
         }
         private void ShowLastNum(StuGLSearch stuSearch00, DataSet dsDataSet00)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region Set lstCurreny
@@ -6874,14 +6771,12 @@ namespace GalaxyLotto
             {
                 foreach (var KeyPair in dicCurrentData)
                 {
-                    dgtColumn = new DataGridTextColumn();
-                    string strTemp = KeyPair.Key;
-                    if (CFieldIDToName.ContainsKey(strTemp))
-                        strTemp = CFieldIDToName[strTemp];
-                    dgtColumn.Header = strTemp;
-                    Binding dgtBinding = new Binding(KeyPair.Key);
-                    dgtColumn.Binding = dgtBinding;
-                    dgtColumn.IsReadOnly = true;
+                    dgtColumn = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1),
+                        Binding = new Binding(KeyPair.Key),
+                        IsReadOnly = true
+                    };
                     dgCurrentData.Columns.Add(dgtColumn);
                 }
             }
@@ -6909,17 +6804,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtShow.Columns)
                 {
-                    dgtColumnLast = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnLast = new DataGridTextColumn
                     {
-                        dgtColumnLast.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnLast.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnLast.Binding = new Binding(dcdgColumn.ColumnName);
-                    dgtColumnLast.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     if (dcdgColumn.ColumnName == "lngDateSN")
                     {
                         Style Style00 = new Style();
@@ -7002,17 +6892,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtUpper.Columns)
                 {
-                    dgtColumnUpper = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnUpper = new DataGridTextColumn
                     {
-                        dgtColumnUpper.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnUpper.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnUpper.Binding = new Binding(dcdgColumn.ColumnName);
-                    dgtColumnUpper.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     if (dcdgColumn.ColumnName == "lngDateSN")
                     {
                         Style StyleUp = new Style();
@@ -7080,17 +6965,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtLower.Columns)
                 {
-                    dgtColumnLower = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnLower = new DataGridTextColumn
                     {
-                        dgtColumnLower.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnLower.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnLower.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnLower.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     if (dcdgColumn.ColumnName == "lngDateSN")
                     {
                         Style StyleDown = new Style();
@@ -7162,13 +7042,12 @@ namespace GalaxyLotto
                 int intColumnCount = 0;
                 foreach (DataColumn dcColumn in dtLastSum.Columns)
                 {
-                    dgtColumn00 = new DataGridTextColumn();
-                    string strTemp = dcColumn.ColumnName;
-                    if (CFieldIDToName.ContainsKey(strTemp)) strTemp = CFieldIDToName[strTemp];
-                    dgtColumn00.Header = strTemp;
-                    Binding dgtBinding = new Binding(dcColumn.ColumnName);
-                    dgtColumn00.Binding = dgtBinding;
-                    dgtColumn00.IsReadOnly = true;
+                    dgtColumn00 = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(dcColumn.ColumnName, 1),
+                        Binding = new Binding(dcColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     if (intColumnCount == 0)
                     {
                         Style Style00 = new Style();
@@ -7178,7 +7057,7 @@ namespace GalaxyLotto
                             Style00.TargetType = typeof(DataGridCell);
                             DataTrigger dtTrig00 = new DataTrigger()
                             {
-                                Binding = dgtBinding,
+                                Binding = new Binding(dcColumn.ColumnName),
                                 Value = string.Format("{0:00}", intNum)
                             };
                             Setter setter00 = new Setter()
@@ -7239,13 +7118,12 @@ namespace GalaxyLotto
                 int intColumnCount = 0;
                 foreach (DataColumn dcColumn in dtLast2.Columns)
                 {
-                    dgtColumn2 = new DataGridTextColumn();
-                    string strTemp = dcColumn.ColumnName;
-                    if (CFieldIDToName.ContainsKey(strTemp)) strTemp = CFieldIDToName[strTemp];
-                    dgtColumn2.Header = strTemp;
-                    Binding dgtBinding = new Binding(dcColumn.ColumnName);
-                    dgtColumn2.Binding = dgtBinding;
-                    dgtColumn2.IsReadOnly = true;
+                    dgtColumn2 = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(dcColumn.ColumnName, 1),
+                        Binding = new Binding(dcColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     if (intColumnCount == 0)
                     {
                         Style Style00 = new Style();
@@ -7255,7 +7133,7 @@ namespace GalaxyLotto
                             Style00.TargetType = typeof(DataGridCell);
                             DataTrigger dtTrig00 = new DataTrigger()
                             {
-                                Binding = dgtBinding,
+                                Binding = new Binding(dcColumn.ColumnName),
                                 Value = string.Format("{0:00}", intNum)
                             };
                             Setter setter00 = new Setter()
@@ -7406,7 +7284,6 @@ namespace GalaxyLotto
         private void ShowDoubleZero(StuGLSearch stuSearch00, DataSet dsDataSet00)
         {
             #region Seting
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region lstCurrentNum
@@ -7446,17 +7323,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtShow.Columns)
                 {
-                    dgtColumnActive = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnActive = new DataGridTextColumn
                     {
-                        dgtColumnActive.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnActive.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnActive.Binding = new Binding(dcdgColumn.ColumnName);
-                    dgtColumnActive.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgShow.Columns.Add(dgtColumnActive);
                 }
             }
@@ -7484,16 +7356,11 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtDZCount.Columns)
                 {
-                    dgtDZ = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtDZ = new DataGridTextColumn
                     {
-                        dgtDZ.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtDZ.Header = dcdgColumn.Caption;
-                    }
-                    dgtDZ.Binding = new Binding(dcdgColumn.ColumnName);
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new Binding(dcdgColumn.ColumnName)
+                    };
 
                     if (dcdgColumn.ColumnName == "strNum")
                     {
@@ -7569,14 +7436,12 @@ namespace GalaxyLotto
             {
                 foreach (var KeyPair in dicCurrentData)
                 {
-                    dgtColumn = new DataGridTextColumn();
-                    string strTemp = KeyPair.Key;
-                    if (CFieldIDToName.ContainsKey(strTemp))
-                        strTemp = CFieldIDToName[strTemp];
-                    dgtColumn.Header = strTemp;
-                    Binding dgtBinding = new Binding(KeyPair.Key);
-                    dgtColumn.Binding = dgtBinding;
-                    dgtColumn.IsReadOnly = true;
+                    dgtColumn = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1),
+                        Binding = new Binding(KeyPair.Key),
+                        IsReadOnly = true
+                    };
                     dgCurrentData.Columns.Add(dgtColumn);
                 }
             }
@@ -7702,7 +7567,6 @@ namespace GalaxyLotto
         }
         private void ShowMatch(StuGLSearch stuSearch00, DataSet dsDataSet00)
         {
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
             CGLDataSet Dataset00 = new CGLDataSet(stuSearch00.LottoType);
             Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearch00);
             #region Set lstCurreny
@@ -7745,14 +7609,12 @@ namespace GalaxyLotto
             {
                 foreach (var KeyPair in dicCurrentData)
                 {
-                    dgtColumn = new DataGridTextColumn();
-                    string strTemp = KeyPair.Key;
-                    if (CFieldIDToName.ContainsKey(strTemp))
-                        strTemp = CFieldIDToName[strTemp];
-                    dgtColumn.Header = strTemp;
-                    Binding dgtBinding = new Binding(KeyPair.Key);
-                    dgtColumn.Binding = dgtBinding;
-                    dgtColumn.IsReadOnly = true;
+                    dgtColumn = new DataGridTextColumn
+                    {
+                        Header = new CGLFunc().ConvertFieldNameID(KeyPair.Key, 1),
+                        Binding = new Binding(KeyPair.Key),
+                        IsReadOnly = true
+                    };
                     dgCurrentData.Columns.Add(dgtColumn);
                 }
             }
@@ -7960,7 +7822,6 @@ namespace GalaxyLotto
             if (tbTestNum.Text.Length == 0) return;
             #region 設定
 
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
 
             #region 設定 stuSearchsmart
             StuGLSearch stuSearchsmart = ButtonClick(stuRibbonSearchOption);
@@ -8204,17 +8065,12 @@ namespace GalaxyLotto
             {
                 foreach (DataColumn dcdgColumn in dtCombination.Columns)
                 {
-                    dgtColumnMissAll = new DataGridTextColumn();
-                    if (CFieldIDToName.ContainsKey(dcdgColumn.Caption))
+                    dgtColumnMissAll = new DataGridTextColumn
                     {
-                        dgtColumnMissAll.Header = CFieldIDToName[dcdgColumn.Caption];
-                    }
-                    else
-                    {
-                        dgtColumnMissAll.Header = dcdgColumn.Caption;
-                    }
-                    dgtColumnMissAll.Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName);
-                    dgtColumnMissAll.IsReadOnly = true;
+                        Header = new CGLFunc().ConvertFieldNameID(dcdgColumn.Caption, 1),
+                        Binding = new System.Windows.Data.Binding(dcdgColumn.ColumnName),
+                        IsReadOnly = true
+                    };
                     dgCombination.Columns.Add(dgtColumnMissAll);
                 }
             }

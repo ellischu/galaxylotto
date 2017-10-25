@@ -169,12 +169,11 @@ namespace GalaxyLotto
             stringbuilder.AppendLine(string.Format("<caption>{0} 資料更新</caption>", DataSet00.LottoDescription));
             stringbuilder.AppendLine("<thead>");
             stringbuilder.AppendLine("<tr>");
-            Dictionary<string, string> CFieldIDToName = new CGLFunc().CFieldNameID(1);
-            Dictionary<string, string> CIDToName = new CGLFunc().CNameID(1);
+
             foreach (DataColumn dcColumn in tblCsvFile.Columns)
             {
                 stringbuilder.AppendLine(string.Format("<th id='{0}' class='{0}' >", dcColumn.ColumnName));
-                stringbuilder.AppendLine(CFieldIDToName[dcColumn.ColumnName]);
+                stringbuilder.AppendLine(new CGLFunc().ConvertFieldNameID(dcColumn.ColumnName,1));
                 stringbuilder.AppendLine("</th>");
             }
 
@@ -187,12 +186,7 @@ namespace GalaxyLotto
                 for (int intcolumn = 0; intcolumn < tblCsvFile.Columns.Count; intcolumn++)
                 {
                     stringbuilder.AppendLine("<td>");
-                    string strdata = drRow[intcolumn].ToString();
-                    if (CIDToName.ContainsKey(strdata))
-                    {
-                        strdata = CIDToName[strdata];
-                    }
-                    stringbuilder.AppendLine(strdata);
+                    stringbuilder.AppendLine(new CGLFunc().ConvertNameID(drRow[intcolumn].ToString(), 1));
                     stringbuilder.AppendLine("</td>");
                 }
                 stringbuilder.AppendLine("</tr>");
