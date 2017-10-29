@@ -944,7 +944,9 @@ namespace GalaxyLotto
                         Background = Brushes.Aqua
                     };
                     dgProcessResult = new System.Windows.Controls.DataGrid();
-                    dtProcessResult = new CGLFunc().CTableShow(dicProcessResult[dicFreqResult.Key]);
+                    DataTable dtTemp = dicProcessResult[dicFreqResult.Key];
+                    new CGLFunc().CTableShow(ref dtTemp);
+                    dtProcessResult = dtTemp;
 
                     #region Set DataGrid dgProcessResult
                     dgProcessResult.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;

@@ -92,7 +92,7 @@
     <ManifestCertificateThumbprint>337BF41926D39E12238D52CF1E8C7A1E89509B8C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>GalaxyLotto_3_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>GalaxyLotto_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
