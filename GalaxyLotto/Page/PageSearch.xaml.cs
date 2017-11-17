@@ -5600,9 +5600,9 @@ namespace GalaxyLotto
             };
             #endregion
             #region Check Does Percent.Html exist ?
+            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchPercent);
             string strCurrentDirectory = System.IO.Directory.GetCurrentDirectory();
             string strHtmlDirectory = System.IO.Path.Combine(strCurrentDirectory, "html");
-            Dictionary<string, string> dicCurrentData = new CGLSearch().GetCurrentData(stuSearchPercent);
             string strFileName = string.Format("Percent_{0}{1}.html", new CGLDataSet(stuSearchPercent.LottoType).ID, dicCurrentData["lngDateSN"]);
             bool boolFileExist = new CGLFunc().FileExist(strHtmlDirectory, strFileName);
             #endregion
