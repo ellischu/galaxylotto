@@ -5873,8 +5873,6 @@ namespace GalaxyLotto
                 ItemsSource = dtAppear.DefaultView
             };
 
-
-
             #region Set Columns of DataGrid dgAppear 
             if (dgAppear.Columns.Count == 0)
             {
