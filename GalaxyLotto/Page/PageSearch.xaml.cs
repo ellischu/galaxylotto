@@ -163,8 +163,8 @@ namespace GalaxyLotto
             stuRibbonSearchOption.StrNextNumSpe = "none";
             stuRibbonSearchOption.IntNextNums = int.Parse(cmbNextNums.SelectedValue.ToString());
             stuRibbonSearchOption.IntNextStep = int.Parse(cmbNextStep.SelectedValue.ToString());
-            if (chkShowProcess.IsChecked == true) { stuRibbonSearchOption.showProcess = ShowProcess.Visible; } else { stuRibbonSearchOption.showProcess = ShowProcess.Hide; }
-            if (chkshowGraphic.IsChecked == true) { stuRibbonSearchOption.showGraphic = ShowGraphic.Visible; } else { stuRibbonSearchOption.showGraphic = ShowGraphic.Hide; }
+            if (chkShowProcess.IsChecked == true) { stuRibbonSearchOption.ShowProcess = ShowProcess.Visible; } else { stuRibbonSearchOption.ShowProcess = ShowProcess.Hide; }
+            if (chkshowGraphic.IsChecked == true) { stuRibbonSearchOption.ShowGraphic = ShowGraphic.Visible; } else { stuRibbonSearchOption.ShowGraphic = ShowGraphic.Hide; }
             #endregion Set stuRibbonSearchOption
         }
         /// <summary>
@@ -384,15 +384,15 @@ namespace GalaxyLotto
         }
         private void ChkShowProcess_Unchecked(object sender, RoutedEventArgs e)
         {
-            stuRibbonSearchOption.showProcess = ShowProcess.Hide;
+            stuRibbonSearchOption.ShowProcess = ShowProcess.Hide;
         }
         private void ChkshowGraphic_Checked(object sender, RoutedEventArgs e)
         {
-            stuRibbonSearchOption.showGraphic = ShowGraphic.Visible;
+            stuRibbonSearchOption.ShowGraphic = ShowGraphic.Visible;
         }
         private void ChkshowGraphic_Unchecked(object sender, RoutedEventArgs e)
         {
-            stuRibbonSearchOption.showGraphic = ShowGraphic.Hide;
+            stuRibbonSearchOption.ShowGraphic = ShowGraphic.Hide;
         }
         private void CmbCompareType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -400,7 +400,7 @@ namespace GalaxyLotto
         }
         private void ChkShowProcess_Checked(object sender, RoutedEventArgs e)
         {
-            stuRibbonSearchOption.showProcess = ShowProcess.Visible;
+            stuRibbonSearchOption.ShowProcess = ShowProcess.Visible;
         }
         private void TxtDataLimit_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
@@ -898,7 +898,7 @@ namespace GalaxyLotto
                 stackPanel.Children.Add(expFreqResult);
                 #endregion
                 #region Set Expander Graphic
-                if (gstuGLSearch.showGraphic == ShowGraphic.Visible)
+                if (gstuGLSearch.ShowGraphic == ShowGraphic.Visible)
                 {
                     expGraphicResult = new Expander()
                     {
@@ -934,7 +934,7 @@ namespace GalaxyLotto
                 }
                 #endregion
                 #region Set Expander Process
-                if (gstuGLSearch.showProcess == ShowProcess.Visible)
+                if (gstuGLSearch.ShowProcess == ShowProcess.Visible)
                 {
                     expProcessResult = new Expander()
                     {
