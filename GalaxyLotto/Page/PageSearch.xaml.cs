@@ -5608,7 +5608,7 @@ namespace GalaxyLotto
             #endregion
             if (stuSearchPercent.BoolRecalc || !boolFileExist)
             {
-                Dictionary<string, object> dicCompares = new CGLSearch().GetTablePercent(stuSearchPercent);
+                Dictionary<string, object> dicCompares = new CGLTablePercent().GetTablePercent(stuSearchPercent);
                 dicArgument.Add("Compares", dicCompares);
             }
             e.Result = dicArgument;
@@ -6636,12 +6636,12 @@ namespace GalaxyLotto
             #endregion
             #region Check tblPercent hsa Data
             Dictionary<string, object> dicCompares01 = new Dictionary<string, object>();
-            if (!new CGLSearch().HasPercentAllData(stuSearchPercent01))
+            if (!new CGLTablePercent().HasPercentAllData(stuSearchPercent01))
             {
-                new CGLSearch().SearchTablePercentAll(stuSearchPercent01);
+                new CGLTablePercent().SearchTablePercentAll(stuSearchPercent01);
             }
 
-            new CGLSearch().GetTablePercentAll(stuSearchPercent01);
+            new CGLTablePercent().GetTablePercentAll(stuSearchPercent01);
 
             #endregion
             dicArgument.Add("Compares", dicCompares01);
